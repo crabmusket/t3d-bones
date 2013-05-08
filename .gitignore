@@ -1,0 +1,12 @@
+# Executable outputs
+*.exe
+*.dll
+*.lnk
+*.exp
+*.ilk
+
+# Compiled scripts
+*.dso
+
+# The console
+console.log
