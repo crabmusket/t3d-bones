@@ -43,14 +43,14 @@ exec("scripts/globals.cs");
 
 // The canvas needs to be initialized before any gui scripts are run since
 // some of the controls assume that the canvas exists at load time.
-createCanvas("T3D: Empty");
+createCanvas("T3Dbones");
 
 // Start rendering and stuff.
 initRenderManager();
-initLightingSystems("Advanced Lighting"); 
+initLightingSystems("Basic Lighting"); 
 
-// Start PostFX. If you use "Basic Lighting" above, you can get rid of this.
-initPostEffects();
+// Start PostFX. If you use "Advanced Lighting" above, uncomment this.
+//initPostEffects();
 
 // Start audio.
 sfxStartup();
