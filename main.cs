@@ -66,19 +66,16 @@ function GameConnection::onConnect(%client) {
 }
 
 // Called when all datablocks from above have been transmitted.
-function GameConnection::onDataBlocksDone(%this) {
-   %this.activateGhosting();
+function GameConnection::onDataBlocksDone(%client) {
+   // Start sending ghosts to the client.
+   %client.activateGhosting();
+   // Create a camera for the client.
    %c = spawnObject(Camera, Observer);
-   %c.scopeToClient(%this);
-   %this.setControlObject(%c);
    GameCleanup.add(%c);
-}
-
-// Called when we first take control of an object (see onDatablocksDone).
-function GameConnection::initialControlSet(%this) {
-   if (Canvas.getContent() != HudlessPlayGui.getId()) {
-      Canvas.setContent(HudlessPlayGui);
-   }
+   %c.scopeToClient(%client);
+   %client.setControlObject(%c);
+   // Activate HUD which allows us to see the game.
+   Canvas.setContent(HudlessPlayGui);
    activateDirectInput();
 }
 
@@ -88,10 +85,9 @@ datablock CameraData(Observer) {
    mode = "Observer";
 };
 
-// Create a local game server.
+// Create a local game server and connect to it.
 new SimGroup(ServerGroup);
 new GameConnection(ServerConnection);
-RootGroup.add(ServerConnection);
 // This calls GameConnection::onConnect.
 ServerConnection.connectLocal();
 
