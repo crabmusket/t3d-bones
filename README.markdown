@@ -21,4 +21,9 @@ And then delete the `.git` folder that links your repository to mine:
 
     rm -rf myAwesomeGame/.git
 
+In the interests of keeping the repository small and focused on the scripts, there are no binary files included.
+You can either copy them from your main T3D installation, or download [Empty.dll][] and [Empty.exe][] from my DropBox account.
 And you're ready to go!
+
+ [Empty.dll]: https://www.dropbox.com/s/zt2pd6k00fqbybo/Empty.dll
+ [Empty.exe]: https://www.dropbox.com/s/uqrpe1dprjte72b/Empty.exe
