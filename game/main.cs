@@ -31,8 +31,7 @@ datablock CameraData(Observer) {};
 //-----------------------------------------------------------------------------
 // And a material to give the ground some colour (even if it's just white).
 singleton Material(BlankWhite) {
-   diffuseMap[0] = "./white";
-   mapTo = "white";
+   diffuseColor[0] = "1 1 1";
 };
 
 //-----------------------------------------------------------------------------

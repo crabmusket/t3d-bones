@@ -119,14 +119,10 @@ We just haven't chosen to change any of the defaults, so in our script file, the
 And now for the material:
 
     singleton Material(BlankWhite) {
-        diffuseMap[0] = "./white";
-        mapTo = "white";
+        diffuseColor[0] = "1 1 1";
     };
 
-This very simple material declaration uses the `white.jpg` image as a diffuse map.
-If you don't know what this means, have no fear!
-It's actually irrelevant at this point, but just understand that this material does exactly what it says on the tin: makes objects appear white.
-
+This very simple material declaration literally makes the entire object white (decimal RGB colour `(1, 1, 1)`).
 Hurrah!
 We now have enough information to actually go ahead and run the game!
 Start 'er up!

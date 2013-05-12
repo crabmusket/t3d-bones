@@ -27,7 +27,6 @@ datablock CameraData(Observer) {};
 singleton Material(BlankWhite) {
    detailMap[0] = "./white";
    detailScale[0] = "20 20";
-   mapTo = "white";
 };
 
 //-----------------------------------------------------------------------------
