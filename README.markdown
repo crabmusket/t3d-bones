@@ -20,21 +20,18 @@ Therefore:
 
 Want to start your own project based off `t3d-bones`?
 Awesome!
-To get started, just clone this repository somewhere:
+To get started, you can download a zip of this repository with binaries [from my DropBox][package] (5MB).
+If you're a `git` user, you can also just clone this repository somewhere:
 
     git clone git@github.com:eightyeight/t3d-bones.git myAwesomeGame
 
-And then delete the `.git` folder that links your repository to mine:
-
-    rm -rf myAwesomeGame/.git
-
-And if you don't want the tutorials, it might be a good idea to remove them as well:
+And if you don't want the tutorials, you can just delete the folder:
 
     rm -rf myAwesomeGame/tutorials
 
 In the interests of keeping the repository small and focused on the scripts, there are no binary files included.
-You can either copy them from your main T3D installation, or download [Empty.dll][] and [Empty.exe][] from my DropBox account.
+You can either copy them from your main T3D installation, or download Empty.dll and Empty.exe [from DropBox][binaries] (4.5MB).
 And you're ready to go!
 
- [Empty.dll]: https://www.dropbox.com/s/zt2pd6k00fqbybo/Empty.dll
- [Empty.exe]: https://www.dropbox.com/s/uqrpe1dprjte72b/Empty.exe
+ [package]: https://www.dropbox.com/s/e07civwvkvdjvd7/t3d-bones.zip 
+ [binaries]: https://www.dropbox.com/s/6ggmqcps07ky5pi/t3d-bones-binaries.zip
