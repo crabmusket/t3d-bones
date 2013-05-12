@@ -3,9 +3,11 @@
 In this tutorial, we'll extend our knowledge of Torque's input system, using the mouse and keyboard to fly the camera around.
 This tutorial introduces an important idea: Torque's move manager.
 
+I'm basing my work on the file [`tutorials/02_camera_movement/main.cs`][game.cs], so open it up and take a look.
 To load the completed tutorial in `ted-bones`, change `exec("game/main.cs");` in [`main.cs`][main.cs] to `exec("tutorials/02_camera_movement/main.cs");`.
 
  [main.cs]: ../../main.cs
+ [game.cs]: ./main.cs
 
 ## Advanced keybinds
 
