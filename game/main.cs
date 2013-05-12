@@ -80,8 +80,7 @@ function onStart() {
       };
    };
 
-   // Create some keybinds for the console and to exit.
-   GlobalActionMap.bind("keyboard", "tilde", "toggleConsole");
+   // Allow us to exit the game...
    GlobalActionMap.bind("keyboard", "escape", "quit");
 }
 

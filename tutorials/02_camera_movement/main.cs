@@ -64,7 +64,6 @@ function onStart() {
       };
    };
 
-   GlobalActionMap.bind("keyboard", "tilde", "toggleConsole");
    GlobalActionMap.bind("keyboard", "escape", "quit");
 
    GlobalActionMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");

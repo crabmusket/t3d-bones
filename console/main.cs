@@ -22,3 +22,5 @@
 
 exec("./profiles.cs");
 exec("./console.gui");
+
+GlobalActionMap.bind("keyboard", "tilde", "toggleConsole");
