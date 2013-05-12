@@ -21,6 +21,10 @@
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
+// Load up our main GUI which lets us see the game.
+exec("gui/hudlessGui.gui");
+
+//-----------------------------------------------------------------------------
 // Create a datablock for the observer camera.
 datablock CameraData(Observer) {
    mode = "Observer";

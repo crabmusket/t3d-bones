@@ -57,7 +57,6 @@ sfxStartup();
 
 // Load UI profiles and scripts.
 exec("gui/console.gui");
-exec("gui/hudlessGui.gui");
 
 exec("game.cs");
 
