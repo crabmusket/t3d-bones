@@ -63,3 +63,23 @@ There's no way to access this if we use `bindCmd` with a code fragment to execut
 
 These functions introduce two new `$mv` variables: pitch and yaw.
 They do pretty much what they sound like - rotate the camera around the right (_x_) and up (_z_) axes respectively.
+
+Nice work!
+
+## And another thing
+
+Just in case you're wondering - we could have used the regular `bind` for those keyboard controls.
+Here's how:
+
+    GlobalActionMap.bind("keyboard", "w", "forwards");
+
+    function forwards(%down) {
+        if(%down) $mvForwardAction = 1;
+        else      $mvForwardAction = 0;
+    }
+
+What do you think `%down` - the argument passed to this function does?
+Yeah - it's a boolean that's true when they key is pressed _down_, and false when it's released.
+The `forwards` function is called twice for every tap of the key - once when you press it, and once when you release.
+
+I chose to use `bindCmd` because it's more succinct in this case, and because we hadn't used it before!
