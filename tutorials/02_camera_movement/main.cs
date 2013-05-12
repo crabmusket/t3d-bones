@@ -83,13 +83,10 @@ function pitch(%amount) {
 
 //-----------------------------------------------------------------------------
 function onExit() {
-   // Delete the objects we created.
    GameGroup.delete();
 
-   // Delete the connection if it's still there.
    ServerConnection.delete();
    ServerGroup.delete();
 
-   // Delete all the datablocks...
    deleteDataBlocks();
 }
