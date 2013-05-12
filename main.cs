@@ -50,7 +50,8 @@ sfxStartup();
 // Load console.
 exec("console/main.cs");
 
-exec("game.cs");
+// Load up game code.
+exec("game/main.cs");
 
 //-----------------------------------------------------------------------------
 // Called when we connect to the local game.
