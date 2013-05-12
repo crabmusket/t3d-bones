@@ -41,7 +41,7 @@ These `Move` objects get sent to a client's _control object_, which you might re
 
     %client.setControlObject(TheCamera);
 
-That means when you set `$mvForwardAction` to some value, Torque automatically sends to the `Camera` you're in control of, which decides what to di with it - in this case, it moves forward!
+That means when you set `$mvForwardAction` to some value, Torque automatically sends to the `Camera` you're in control of, which decides what to do with it - in this case, it moves forward!
 
 ## Mouse control
 
