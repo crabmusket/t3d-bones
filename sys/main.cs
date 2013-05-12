@@ -35,6 +35,14 @@
 // to find exactly which subsystems should be readied before kicking things off. 
 // ----------------------------------------------------------------------------
 
+// We need some of the default GUI profiles in order to get the canvas and
+// other aspects of the GUI system ready.
+exec("./profiles.cs");
+
+// Initialization of the various subsystems requires some of the preferences
+// to be loaded... so do that first.
+exec("./globals.cs");
+
 exec("./canvas.cs");
 exec("./cursor.cs");
 

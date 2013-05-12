@@ -33,14 +33,6 @@ trace(0);
 // Load up scripts to initialise subsystems.
 exec("sys/main.cs");
 
-// We need some of the default GUI profiles in order to get the canvas and
-// other aspects of the GUI system ready.  
-exec("gui/profiles.cs");
-
-// Initialization of the various subsystems requires some of the preferences
-// to be loaded... so do that first.  
-exec("scripts/globals.cs");
-
 // The canvas needs to be initialized before any gui scripts are run since
 // some of the controls assume that the canvas exists at load time.
 createCanvas("T3Dbones");
