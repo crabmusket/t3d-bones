@@ -27,7 +27,7 @@ displaySplashWindow("splash.bmp");
 // Console does something.
 setLogMode(2);
 // Disable script trace.
-trace(0);
+trace(false);
 
 //-----------------------------------------------------------------------------
 // Load up scripts to initialise subsystems.
@@ -47,13 +47,13 @@ initLightingSystems("Basic Lighting");
 // Start audio.
 sfxStartup();
 
+//-----------------------------------------------------------------------------
 // Load console.
 exec("console/main.cs");
 
 // Load up game code.
 exec("game/main.cs");
 
-//-----------------------------------------------------------------------------
 // Called when we connect to the local game.
 function GameConnection::onConnect(%client) {
    %client.transmitDataBlocks(0);
