@@ -43,8 +43,14 @@ function GameConnection::onEnterGame(%client) {
       datablock = Observer;
    };
    TheCamera.setTransform("0 0 2 1 0 0 0");
+   // Cameras are not ghosted (sent across the network) by default; we need to
+   // do it manually for the client that owns the camera or things will go south
+   // quickly.
    TheCamera.scopeToClient(%client);
+   // And let the client control the camera.
    %client.setControlObject(TheCamera);
+   // Add the camera to the group of game objects so that it's cleaned up when
+   // we close the game.
    GameGroup.add(TheCamera);
    // Activate HUD which allows us to see the game. This should technically be
    // a commandToClient, but since the client and server are on the same
@@ -56,7 +62,7 @@ function GameConnection::onEnterGame(%client) {
 //-----------------------------------------------------------------------------
 // Called when the engine has been initialised.
 function onStart() {
-   // Create objects in the game!
+   // Create objects!
    new SimGroup(GameGroup) {
       new LevelInfo(TheLevelInfo) {
          canvasClearColor = "0 0 0";
@@ -89,6 +95,6 @@ function onExit() {
    ServerConnection.delete();
    ServerGroup.delete();
 
-   // Delete all the datablocks...
+   // Delete all the datablocks.
    deleteDataBlocks();
 }
