@@ -23,7 +23,7 @@
 // If we got back no prefs path modification
 if( $Gui::fontCacheDirectory $= "")
 {
-   $Gui::fontCacheDirectory = expandFilename( "gui/fonts" );
+   $Gui::fontCacheDirectory = expandFilename( "./fonts" );
 }
 
 // ----------------------------------------------------------------------------
