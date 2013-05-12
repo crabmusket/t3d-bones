@@ -31,6 +31,13 @@ datablock CameraData(Observer) {
 };
 
 //-----------------------------------------------------------------------------
+// And a material to give the ground some colour (even if it's just white).
+singleton Material(BlankWhite) {
+   diffuseMap[0] = "./white";
+   mapTo = "white";
+};
+
+//-----------------------------------------------------------------------------
 // Called when all datablocks have been transmitted.
 function GameConnection::onEnterGame(%client) {
    // Create a camera for the client.
@@ -51,10 +58,6 @@ function onStart() {
    // Create objects in the game!
    new SimGroup(GameCleanup);
    new SimGroup(GameGroup) {
-      singleton Material(BlankWhite) {
-         diffuseMap[0] = "./white";
-         mapTo = "white";
-      };
       new LevelInfo(theLevelInfo) {
          canvasClearColor = "0 0 0";
       };
