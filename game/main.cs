@@ -26,9 +26,7 @@ exec("./hudlessGui.gui");
 
 //-----------------------------------------------------------------------------
 // Create a datablock for the observer camera.
-datablock CameraData(Observer) {
-   mode = "Observer";
-};
+datablock CameraData(Observer) {};
 
 //-----------------------------------------------------------------------------
 // And a material to give the ground some colour (even if it's just white).
@@ -41,10 +39,12 @@ singleton Material(BlankWhite) {
 // Called when all datablocks have been transmitted.
 function GameConnection::onEnterGame(%client) {
    // Create a camera for the client.
-   %c = spawnObject(Camera, Observer);
-   GameCleanup.add(%c);
-   %c.scopeToClient(%client);
-   %client.setControlObject(%c);
+   new Camera(TheCamera) {
+      datablock = Observer;
+   };
+   TheCamera.scopeToClient(%client);
+   %client.setControlObject(TheCamera);
+   GameGroup.add(TheCamera);
    // Activate HUD which allows us to see the game. This should technically be
    // a commandToClient, but since the client and server are on the same
    // machine...
@@ -56,16 +56,15 @@ function GameConnection::onEnterGame(%client) {
 // Called when the engine has been initialised.
 function onStart() {
    // Create objects in the game!
-   new SimGroup(GameCleanup);
    new SimGroup(GameGroup) {
-      new LevelInfo(theLevelInfo) {
+      new LevelInfo(TheLevelInfo) {
          canvasClearColor = "0 0 0";
       };
-      new GroundPlane(theGround) {
+      new GroundPlane(TheGround) {
          Position = "0 0 0";
          Material = "BlankWhite";
       };
-      new Sun(theSun) {
+      new Sun(TheSun) {
          azimuth = "230.396";
          elevation = "45";
          color = "0.968628 0.901961 0.901961 1";
@@ -75,29 +74,20 @@ function onStart() {
    };
 
    // Create some keybinds for the console and to exit.
-   GlobalActionMap.bind(keyboard, "tilde", toggleConsole);
-   GlobalActionMap.bind(keyboard, "escape", quit);
+   GlobalActionMap.bind("keyboard", "tilde", "toggleConsole");
+   GlobalActionMap.bind("keyboard", "escape", "quit");
 }
 
 //-----------------------------------------------------------------------------
 // Called when the engine is shutting down.
 function onExit() {
-   echo("GOODBYE.");
-
    // Delete the objects we created.
-   GameCleanup.delete();
    GameGroup.delete();
 
    // Delete the connection if it's still there.
    ServerConnection.delete();
    ServerGroup.delete();
 
-   // Delete all the connections:
-   while (ClientGroup.getCount()) {
-      %client = ClientGroup.getObject(0);
-      %client.delete();
-   }
-
-   // Delete all the data blocks...
+   // Delete all the datablocks...
    deleteDataBlocks();
 }
