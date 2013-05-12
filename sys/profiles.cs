@@ -20,10 +20,10 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-// If we got back no prefs path modification
-if( $Gui::fontCacheDirectory $= "")
+// Set font cache path if it doesn't already exist.
+if($Gui::fontCacheDirectory $= "")
 {
-   $Gui::fontCacheDirectory = expandFilename( "./fonts" );
+   $Gui::fontCacheDirectory = expandFilename("./fonts");
 }
 
 // ----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ if( $Gui::fontCacheDirectory $= "")
 // defaults from. It must exist.
 // ----------------------------------------------------------------------------
 
-if( !isObject( GuiDefaultProfile ) )
+if(!isObject(GuiDefaultProfile))
 new GuiControlProfile (GuiDefaultProfile)
 {
    tab = false;
@@ -75,13 +75,9 @@ new GuiControlProfile (GuiDefaultProfile)
    returnTab = false;
    numbersOnly = false;
    cursorColor = "0 0 0 255";
-
-   // sounds
-   //soundButtonDown = "";
-   //soundButtonOver = "";
 };
 
-if( !isObject( GuiToolTipProfile ) )
+if(!isObject(GuiToolTipProfile))
 new GuiControlProfile (GuiToolTipProfile)
 {
    // fill color
@@ -98,7 +94,7 @@ new GuiControlProfile (GuiToolTipProfile)
    category = "Core";
 };
 
-if( !isObject( GuiWindowProfile ) )
+if(!isObject(GuiWindowProfile))
 new GuiControlProfile (GuiWindowProfile)
 {
    opaque = false;
@@ -119,15 +115,13 @@ new GuiControlProfile (GuiWindowProfile)
 };
 
 
-if( !isObject( GuiTextEditProfile ) )
-new GuiControlProfile( GuiTextEditProfile )
+if(!isObject(GuiTextEditProfile))
+new GuiControlProfile(GuiTextEditProfile)
 {
    opaque = true;
    bitmap = "./images/textEdit";
    hasBitmapArray = true; 
-   border = -2; // fix to display textEdit img
-   //borderWidth = "1";  // fix to display textEdit img
-   //borderColor = "100 100 100";
+   border = -2;
    fillColor = "242 241 240 0";
    fillColorHL = "255 255 255";
    fontColor = "0 0 0";
@@ -143,77 +137,26 @@ new GuiControlProfile( GuiTextEditProfile )
    category = "Core";
 };
 
-if( !isObject( GuiScrollProfile ) )
-new GuiControlProfile( GuiScrollProfile )
+if(!isObject(GuiScrollProfile))
+new GuiControlProfile(GuiScrollProfile)
 {
    opaque = true;
    fillcolor = "255 255 255";
    fontColor = "0 0 0";
    fontColorHL = "150 150 150";
-   //borderColor = GuiDefaultProfile.borderColor;
    border = true;
    bitmap = "./images/scrollBar";
    hasBitmapArray = true;
    category = "Core";
 };
 
-if( !isObject( GuiOverlayProfile ) )
-new GuiControlProfile( GuiOverlayProfile )
+if(!isObject(GuiOverlayProfile))
+new GuiControlProfile(GuiOverlayProfile)
 {
    opaque = true;
    fillcolor = "255 255 255";
    fontColor = "0 0 0";
    fontColorHL = "255 255 255";
 	fillColor = "0 0 0 100";
-   category = "Core";
-};
-
-
-if( !isObject( GuiConsoleProfile ) )
-new GuiControlProfile( GuiConsoleProfile )
-{
-   fontType = ($platform $= "macos") ? "Monaco" : "Lucida Console";
-   fontSize = ($platform $= "macos") ? 13 : 12;
-   fontColor = "255 255 255";
-   fontColorHL = "0 255 255";
-   fontColorNA = "255 0 0";
-   fontColors[6] = "100 100 100";
-   fontColors[7] = "100 100 0";
-   fontColors[8] = "0 0 100";
-   fontColors[9] = "0 100 0";
-   category = "Core";
-};
-
-if( !isObject( GuiConsoleTextProfile ) )
-new GuiControlProfile( GuiConsoleTextProfile )
-{   
-   fontColor = "0 0 0";
-   autoSizeWidth = true;
-   autoSizeHeight = true;   
-   textOffset = "2 2";
-   opaque = true;   
-   fillColor = "255 255 255";
-   border = true;
-   borderThickness = 1;
-   borderColor = "0 0 0";
-   category = "Core";
-};
-
-if( !isObject( ConsoleScrollProfile ) )
-new GuiControlProfile( ConsoleScrollProfile : GuiScrollProfile )
-{
-	opaque = true;
-	fillColor = "0 0 0 175";
-	border = 1;
-	//borderThickness = 0;
-	borderColor = "0 0 0";
-   category = "Core";
-};
-
-if( !isObject( ConsoleTextEditProfile ) )
-new GuiControlProfile( ConsoleTextEditProfile : GuiTextEditProfile )
-{
-   fillColor = "242 241 240 255";
-   fillColorHL = "255 255 255";   
    category = "Core";
 };

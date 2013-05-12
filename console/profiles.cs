@@ -20,5 +20,51 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-exec("./profiles.cs");
-exec("./console.gui");
+if(!isObject(GuiConsoleProfile))
+new GuiControlProfile(GuiConsoleProfile)
+{
+   fontType = ($platform $= "macos") ? "Monaco" : "Lucida Console";
+   fontSize = ($platform $= "macos") ? 13 : 12;
+   fontColor = "255 255 255";
+   fontColorHL = "0 255 255";
+   fontColorNA = "255 0 0";
+   fontColors[6] = "100 100 100";
+   fontColors[7] = "100 100 0";
+   fontColors[8] = "0 0 100";
+   fontColors[9] = "0 100 0";
+   category = "Core";
+};
+
+if(!isObject(GuiConsoleTextProfile))
+new GuiControlProfile(GuiConsoleTextProfile)
+{   
+   fontColor = "0 0 0";
+   autoSizeWidth = true;
+   autoSizeHeight = true;   
+   textOffset = "2 2";
+   opaque = true;   
+   fillColor = "255 255 255";
+   border = true;
+   borderThickness = 1;
+   borderColor = "0 0 0";
+   category = "Core";
+};
+
+if(!isObject(ConsoleScrollProfile))
+new GuiControlProfile(ConsoleScrollProfile : GuiScrollProfile)
+{
+	opaque = true;
+	fillColor = "0 0 0 175";
+	border = 1;
+	//borderThickness = 0;
+	borderColor = "0 0 0";
+   category = "Core";
+};
+
+if(!isObject(ConsoleTextEditProfile))
+new GuiControlProfile(ConsoleTextEditProfile : GuiTextEditProfile)
+{
+   fillColor = "242 241 240 255";
+   fillColorHL = "255 255 255";   
+   category = "Core";
+};
