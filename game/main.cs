@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Load up our main GUI which lets us see the game.
-exec("./hudlessGui.gui");
+exec("./playGui.gui");
 
 //-----------------------------------------------------------------------------
 // Create a datablock for the observer camera.
@@ -49,7 +49,7 @@ function GameConnection::onEnterGame(%client) {
    // Activate HUD which allows us to see the game. This should technically be
    // a commandToClient, but since the client and server are on the same
    // machine...
-   Canvas.setContent(HudlessPlayGui);
+   Canvas.setContent(PlayGui);
    activateDirectInput();
 }
 

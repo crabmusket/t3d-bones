@@ -20,12 +20,12 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-exec("game/hudlessGui.gui");
+exec("./playGui.gui");
 
 datablock CameraData(Observer) {};
 
 singleton Material(BlankWhite) {
-   detailMap[0] = "game/white";
+   detailMap[0] = "./white";
    detailScale[0] = "20 20";
    mapTo = "white";
 };
@@ -41,7 +41,7 @@ function GameConnection::onEnterGame(%client) {
    %client.setControlObject(TheCamera);
    GameGroup.add(TheCamera);
 
-   Canvas.setContent(HudlessPlayGui);
+   Canvas.setContent(PlayGui);
    activateDirectInput();
 }
 
