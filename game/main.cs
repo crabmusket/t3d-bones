@@ -42,6 +42,7 @@ function GameConnection::onEnterGame(%client) {
    new Camera(TheCamera) {
       datablock = Observer;
    };
+   TheCamera.setTransform("0 0 2 1 0 0 0");
    TheCamera.scopeToClient(%client);
    %client.setControlObject(TheCamera);
    GameGroup.add(TheCamera);
@@ -61,15 +62,15 @@ function onStart() {
          canvasClearColor = "0 0 0";
       };
       new GroundPlane(TheGround) {
-         Position = "0 0 0";
-         Material = "BlankWhite";
+         position = "0 0 0";
+         material = BlankWhite;
       };
       new Sun(TheSun) {
-         azimuth = "230.396";
-         elevation = "45";
-         color = "0.968628 0.901961 0.901961 1";
-         ambient = "0.078431 0.113725 0.156863 1";
-         castShadows = "1";
+         azimuth = 230;
+         elevation = 45;
+         color = "1 1 1";
+         ambient = "0.1 0.1 0.1";
+         castShadows = true;
       };
    };
 
