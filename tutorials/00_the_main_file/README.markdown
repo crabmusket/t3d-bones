@@ -6,6 +6,7 @@ Otherwise, read on...
 
 This tutorial will take the form of an annotated walk through `main.cs`.
 If you're experienced with Torque you probably won't find much here you couldn't get out of the comments.
+But hey, you might like to hear it again, or without all the template scripts getting in the way!
 
  [main.cs]: ../../main.cs
 
@@ -90,6 +91,29 @@ This function is called when a client connects to the game.
 In a networked game, this may represent an actual client connection from the internet, but in our case, it's always a local connection from inside the engine.
 Don't worry - the internet isn't actually involved.
 Torque just likes to pretend it is.
-The function starts the datablock transmission to the client.
-This basically copies all the server's datablocks (pieces of static information that specify gameplay) tp the client.
 
+The function starts the datablock transmission to the client.
+This basically copies all the server's datablocks (pieces of static information that specify gameplay) to the client.
+Again, over the internet this would actually do something useful - here, since the client and server share the same memory space, it's just a hassle.
+I'm sure there must be some way to bypass this step, but I haven't figured it out yet.
+
+When all the datablocks have been transferred, the client gets the `onDatablocksDone` callback:
+
+    function GameConnection::onDataBlocksDone(%client) {
+        %client.activateGhosting();
+        %client.onEnterGame();
+    }
+
+This simply enables ghosting (synchronising objects across a network) and calls the `onEnterGame` function, which should be defined in game-specific scripts.
+Now we can actually create the server and connect to it:
+
+    new SimGroup(ServerGroup);
+    new GameConnection(ServerConnection);
+    ServerConnection.connectLocal();
+
+This `ServerConnection` object is the one receiving all these `GameConnection::` callbacks.
+Finally, all we need to do is call the startup routine defined by the game scripts:
+
+    onStart();
+
+And we're off!
