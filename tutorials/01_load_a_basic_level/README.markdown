@@ -66,10 +66,12 @@ If you start the engine with just this in your game script file, you won't see a
 This is because Torque has an inherent _client/server_ structure.
 To see our level, we have to connect to it as a _client_, and create a `Camera` object to view it through.
 
-For more detail about the server creation and connection process, you can look through tutorial `00_the_main_file`.
+For more detail about the server creation and connection process, you can look through tutorial [`00_the_main_file`][00].
 But for now, all you need to know is that the function `GameConnection::onEnterGame` is called when the client enters the server's game world.
 The `::` in the name denotes a _namespace_.
 This means the function belongs to objects of the `GameConnection` class, in a way.
+
+ [00]: ../00_the_main_file
 
 ## The onEnterGame function
 

@@ -11,7 +11,7 @@ To load the completed tutorial in `ted-bones`, change `exec("game/main.cs");` in
 
 ## Advanced keybinds
 
-In tutorial `01_load_a_basic_level`, you used a keybind to allow you to close the game with the escape key.
+In tutorial [`01_load_a_basic_level`][01], you used a keybind to allow you to close the game with the escape key.
 Now, we'll dig into some more uses of the keybind system.
 Like these, which you can add to the bottom of `onStart`:
 
@@ -29,6 +29,8 @@ Let's run the game now, and see what happens...
 The camera moves now!
 Is this some form of black magic?
 You might say so...
+
+ [01]: ../01_load_a_basic_level
 
 ## The move manager (`$mv*`)
 
