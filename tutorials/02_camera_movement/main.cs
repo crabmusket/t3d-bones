@@ -36,7 +36,6 @@ function GameConnection::onEnterGame(%client) {
       datablock = Observer;
    };
    TheCamera.setTransform("0 0 2 1 0 0 0");
-   TheCamera.setMovementMode("Fixed");
 
    TheCamera.scopeToClient(%client);
    %client.setControlObject(TheCamera);
@@ -44,36 +43,6 @@ function GameConnection::onEnterGame(%client) {
 
    Canvas.setContent(HudlessPlayGui);
    activateDirectInput();
-}
-
-//-----------------------------------------------------------------------------
-// Swap between the three movement modes of the camera.
-function toggleCameraMode() {
-   switch$(TheCamera.mode) {
-      case "Fly":
-         TheCamera.setMovementMode("Orbit");
-      case "Orbit":
-         TheCamera.setMovementMode("Fixed");
-      case "Fixed":
-         TheCamera.setMovementMode("Fly");
-   }
-}
-
-//-----------------------------------------------------------------------------
-// Apply properties to the camera for a given movement mode.
-function Camera::setMovementMode(%camera, %mode) {
-   %camera.mode = %mode;
-   switch$(%mode) {
-      case "Fixed":
-         TheCamera.setFlyMode();
-         TheCamera.setTransform("0 0 2 1 0 0 0");
-
-      case "Fly":
-         TheCamera.setFlyMode();
-
-      case "Orbit":
-         TheCamera.setOrbitMode(0, "0 0 2 1 0 0 0", 5, 20, 10);
-   }
 }
 
 //-----------------------------------------------------------------------------
@@ -98,9 +67,8 @@ function onStart() {
    GlobalActionMap.bind("keyboard", "tilde", "toggleConsole");
    GlobalActionMap.bind("keyboard", "escape", "quit");
 
-   GlobalActionMap.bind("keyboard", "space", "toggleCameraMode");
    GlobalActionMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
-   GlobalActionMap.bindCmd("keyboard", "s", "$mvForwardAction = -1;", "$mvForwardAction = 0;");
+   GlobalActionMap.bindCmd("keyboard", "s", "$mvBackwardAction = 1;", "$mvBackwardAction = 0;");
    GlobalActionMap.bindCmd("keyboard", "a", "$mvLeftAction = 1;",     "$mvLeftAction = 0;");
    GlobalActionMap.bindCmd("keyboard", "d", "$mvRightAction = 1;",    "$mvRightAction = 0;");
    GlobalActionMap.bind("mouse", "xaxis", "yaw");
