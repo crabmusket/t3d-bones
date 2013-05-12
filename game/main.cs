@@ -52,7 +52,7 @@ function onStart() {
    new SimGroup(GameCleanup);
    new SimGroup(GameGroup) {
       singleton Material(BlankWhite) {
-         diffuseMap[0] = "art/images/white";
+         diffuseMap[0] = "./white";
          mapTo = "white";
       };
       new LevelInfo(theLevelInfo) {
