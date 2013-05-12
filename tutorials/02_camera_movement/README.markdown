@@ -3,6 +3,10 @@
 In this tutorial, we'll extend our knowledge of Torque's input system, using the mouse and keyboard to fly the camera around.
 This tutorial introduces an important idea: Torque's move manager.
 
+To load the completed tutorial in `ted-bones`, change `exec("game/main.cs");` in [`main.cs`][main.cs] to `exec("tutorials/02_camera_movement/main.cs");`.
+
+ [main.cs]: ../../main.cs
+
 ## Advanced keybinds
 
 In tutorial `01_load_a_basic_level`, you used a keybind to allow you to close the game with the escape key.
@@ -18,9 +22,9 @@ Theese binds, unlike the last one we wrote, use a function called `bindCmd`, whi
 You can see the difference - they end in semicolons (as statements must in TorqueScript), and do things.
 In this case, they modify some mysteriously-named global variables.
 
-Let's run this, and see what happens...
+Let's run the game now, and see what happens...
 
-Yes, that's right - the camera moves now!
+The camera moves now!
 Is this some form of black magic?
 You might say so...
 
