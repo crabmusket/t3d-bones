@@ -59,6 +59,8 @@ sfxStartup();
 exec("gui/console.gui");
 exec("gui/hudlessGui.gui");
 
+exec("game.cs");
+
 //-----------------------------------------------------------------------------
 // Called when we connect to the local game.
 function GameConnection::onConnect(%client) {
@@ -69,21 +71,8 @@ function GameConnection::onConnect(%client) {
 function GameConnection::onDataBlocksDone(%client) {
    // Start sending ghosts to the client.
    %client.activateGhosting();
-   // Create a camera for the client.
-   %c = spawnObject(Camera, Observer);
-   GameCleanup.add(%c);
-   %c.scopeToClient(%client);
-   %client.setControlObject(%c);
-   // Activate HUD which allows us to see the game.
-   Canvas.setContent(HudlessPlayGui);
-   activateDirectInput();
+   %client.onEnterGame();
 }
-
-//-----------------------------------------------------------------------------
-// Create a datablock for the observer camera.
-datablock CameraData(Observer) {
-   mode = "Observer";
-};
 
 // Create a local game server and connect to it.
 new SimGroup(ServerGroup);
@@ -91,52 +80,4 @@ new GameConnection(ServerConnection);
 // This calls GameConnection::onConnect.
 ServerConnection.connectLocal();
 
-// Create objects in the game!
-new SimGroup(GameCleanup);
-new SimGroup(GameGroup) {
-   singleton Material(BlankWhite) {
-      diffuseMap[0] = "art/images/white";
-      mapTo = "white";
-   };
-   new LevelInfo(theLevelInfo) {
-      canvasClearColor = "0 0 0";
-   };
-   new GroundPlane(theGround) {
-      Position = "0 0 0";
-      Material = "BlankWhite";
-   };
-   new Sun(theSun) {
-      azimuth = "230.396";
-      elevation = "45";
-      color = "0.968628 0.901961 0.901961 1";
-      ambient = "0.078431 0.113725 0.156863 1";
-      castShadows = "1";
-   };
-};
-
-// Create some keybinds for the console and to exit.
-GlobalActionMap.bind(keyboard, "tilde", toggleConsole);
-GlobalActionMap.bind(keyboard, "escape", quit);
-
-//-----------------------------------------------------------------------------
-// Called when the engine is shutting down.
-function onExit() {
-   echo("GOODBYE.");
-
-   // Delete the objects we created.
-   GameCleanup.delete();
-   GameGroup.delete();
-
-   // Delete the connection if it's still there.
-   ServerConnection.delete();
-   ServerGroup.delete();
-
-   // Delete all the connections:
-   while (ClientGroup.getCount()) {
-      %client = ClientGroup.getObject(0);
-      %client.delete();
-   }
-
-   // Delete all the data blocks...
-   deleteDataBlocks();
-}
+onStart();
