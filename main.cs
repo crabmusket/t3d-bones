@@ -47,8 +47,8 @@ initLightingSystems("Basic Lighting");
 // Start audio.
 sfxStartup();
 
-// Load UI profiles and scripts.
-exec("gui/console.gui");
+// Load console.
+exec("console/main.cs");
 
 exec("game.cs");
 
