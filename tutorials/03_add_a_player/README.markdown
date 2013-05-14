@@ -54,8 +54,17 @@ Another cool thing is that our input bindings that use `$mv` can also stay the s
 That's right - the move manager doesn't care about where its data is going, it just wants your key presses.
 We will add two extra binds, though:
 
-    GlobalActionMap.bindCmd("keyboard", "space", "$mvTriggerCount2++;", "");
+    GlobalActionMap.bindCmd("keyboard", "space", "$mvTriggerCount2++;", "$mvTriggerCount2++;");
     GlobalActionMap.bindCmd("keyboard", "tab", "ServerConnection.setFirstPerson(!ServerConnection.isFirstPerson());", "");
 
 Now we'll be able to jump (and seriously, why would you play a game if you couldn't jump?) and change to a third-person view.
 The `cameraMaxDist` property of the PlayerData block defined above affects this third-person view mode by bringing the floating camera a bit closer to the player.
+You might be wondering why the coe relating to `$mvTriggerCount` is repeated - and, in fact, what on earth this variable even is.
+The move manager has a bunch of _triggers_ meant for just that - triggering events.
+It's typically used for things like firing weapons (which is where the name comes from), but in the case of the Player class, trigger 2 is used for jumping.
+
+Our first instinct when thinking about this code might be to think that the trigger is set to 1 when the button (or key) is held down, and reset to 0 when the button is released.
+However, this has the potential to miss very quick events, like the press and release of a key.
+Instead, we increment the trigger count variables each time we press _or release_ a button (which is why the same script fragment is bound twice - to both press and release events!).
+When the move manager sends its data to the server, it can count the number of times the trigger was pressed since the last update, and it knows whether the trigger is currently depressed - because it has been counting press and release events.
+

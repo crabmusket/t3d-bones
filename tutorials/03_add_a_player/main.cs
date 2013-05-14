@@ -78,7 +78,7 @@ function onStart() {
    GlobalActionMap.bindCmd("keyboard", "s", "$mvBackwardAction = 1;", "$mvBackwardAction = 0;");
    GlobalActionMap.bindCmd("keyboard", "a", "$mvLeftAction = 1;",     "$mvLeftAction = 0;");
    GlobalActionMap.bindCmd("keyboard", "d", "$mvRightAction = 1;",    "$mvRightAction = 0;");
-   GlobalActionMap.bindCmd("keyboard", "space", "$mvTriggerCount2++;", "");
+   GlobalActionMap.bindCmd("keyboard", "space", "$mvTriggerCount2++;", "$mvTriggerCount2++;");
    GlobalActionMap.bind("mouse", "xaxis", "yaw");
    GlobalActionMap.bind("mouse", "yaxis", "pitch");
 
