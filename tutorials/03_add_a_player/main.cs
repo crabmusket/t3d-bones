@@ -74,15 +74,16 @@ function onStart() {
 
    GlobalActionMap.bind("keyboard", "escape", "quit");
 
-   GlobalActionMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
-   GlobalActionMap.bindCmd("keyboard", "s", "$mvBackwardAction = 1;", "$mvBackwardAction = 0;");
-   GlobalActionMap.bindCmd("keyboard", "a", "$mvLeftAction = 1;",     "$mvLeftAction = 0;");
-   GlobalActionMap.bindCmd("keyboard", "d", "$mvRightAction = 1;",    "$mvRightAction = 0;");
-   GlobalActionMap.bindCmd("keyboard", "space", "$mvTriggerCount2++;", "$mvTriggerCount2++;");
-   GlobalActionMap.bind("mouse", "xaxis", "yaw");
-   GlobalActionMap.bind("mouse", "yaxis", "pitch");
-
-   GlobalActionMap.bindCmd("keyboard", "tab", "ServerConnection.setFirstPerson(!ServerConnection.isFirstPerson());", "");
+   new ActionMap(MoveMap);
+   MoveMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
+   MoveMap.bindCmd("keyboard", "s", "$mvBackwardAction = 1;", "$mvBackwardAction = 0;");
+   MoveMap.bindCmd("keyboard", "a", "$mvLeftAction = 1;",     "$mvLeftAction = 0;");
+   MoveMap.bindCmd("keyboard", "d", "$mvRightAction = 1;",    "$mvRightAction = 0;");
+   MoveMap.bindCmd("keyboard", "space", "$mvTriggerCount2++;", "$mvTriggerCount2++;");
+   MoveMap.bindCmd("keyboard", "tab", "ServerConnection.setFirstPerson(!ServerConnection.isFirstPerson());", "");
+   MoveMap.bind("mouse", "xaxis", "yaw");
+   MoveMap.bind("mouse", "yaxis", "pitch");
+   MoveMap.push();
 }
 
 function yaw(%amount) {

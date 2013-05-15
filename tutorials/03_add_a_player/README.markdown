@@ -54,8 +54,8 @@ Another cool thing is that our input bindings that use `$mv` can also stay the s
 That's right - the move manager doesn't care about where its data is going, it just wants your key presses.
 We will add two extra binds, though:
 
-    GlobalActionMap.bindCmd("keyboard", "space", "$mvTriggerCount2++;", "$mvTriggerCount2++;");
-    GlobalActionMap.bindCmd("keyboard", "tab", "ServerConnection.setFirstPerson(!ServerConnection.isFirstPerson());", "");
+    MoveMap.bindCmd("keyboard", "space", "$mvTriggerCount2++;", "$mvTriggerCount2++;");
+    MoveMap.bindCmd("keyboard", "tab", "ServerConnection.setFirstPerson(!ServerConnection.isFirstPerson());", "");
 
 Now we'll be able to jump (and seriously, why would you play a game if you couldn't jump?) and change to a third-person view.
 The `cameraMaxDist` property of the PlayerData block defined above affects this third-person view mode by bringing the floating camera a bit closer to the player.

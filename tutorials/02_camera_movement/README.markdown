@@ -15,10 +15,12 @@ In tutorial [`01_load_a_basic_level`][01], you used a keybind to allow you to cl
 Now, we'll dig into some more uses of the keybind system.
 Like these, which you can add to the bottom of `onStart`:
 
-    GlobalActionMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
-    GlobalActionMap.bindCmd("keyboard", "s", "$mvBackwardAction = 1;", "$mvBackwardAction = 0;");
-    GlobalActionMap.bindCmd("keyboard", "a", "$mvLeftAction = 1;",     "$mvLeftAction = 0;");
-    GlobalActionMap.bindCmd("keyboard", "d", "$mvRightAction = 1;",    "$mvRightAction = 0;");
+    new ActionMap(MoveMap);
+    MoveMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
+    MoveMap.bindCmd("keyboard", "s", "$mvBackwardAction = 1;", "$mvBackwardAction = 0;");
+    MoveMap.bindCmd("keyboard", "a", "$mvLeftAction = 1;",     "$mvLeftAction = 0;");
+    MoveMap.bindCmd("keyboard", "d", "$mvRightAction = 1;",    "$mvRightAction = 0;");
+    MoveMap.push();
 
 Theese binds, unlike the last one we wrote, use a function called `bindCmd`, which, instead of taking a single function name, takes two entire statements.
 You can see the difference - they end in semicolons (as statements must in TorqueScript), and do things.
@@ -43,13 +45,21 @@ These `Move` objects get sent to a client's _control object_, which you might re
 
 That means when you set `$mvForwardAction` to some value, Torque automatically sends to the `Camera` you're in control of, which decides what to do with it - in this case, it moves forward!
 
+## ActionMaps
+
+You will have noticed that unlike our `quit` function binding, which is bound on `GlobalActionMap`, our movement functions were bound to a new `ActionMap` we created called `MoveMap`.
+This is because `GlobalActionMap` is a special reserved object that recieves input events before any other object.
+That means, for example, we wouldn't be able to type in the console with keys that are bound in `GlobalActionMap`!
+By creating a _regular_ action map to use, we let the input events be handled in the proper order.
+The `push` method of `ActionMap` activates the map - we can also call the `pop` command to deactivate all the keybinds associated with an `ActionMap`.
+
 ## Mouse control
 
 We've nearly got a working fly-through camera - just one more detail: the mouse!
 We can handle the mouse like any other input binding, though in this case we can't use `bindCmd` - you'll see why:
 
-    GlobalActionMap.bind("mouse", "xaxis", "yaw");
-    GlobalActionMap.bind("mouse", "yaxis", "pitch");
+    MoveMap.bind("mouse", "xaxis", "yaw");
+    MoveMap.bind("mouse", "yaxis", "pitch");
 
 These binds call the `picth` and `yaw` functions when the mouse moves.
 Let's see those functions, then:
