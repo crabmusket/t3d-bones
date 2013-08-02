@@ -16,6 +16,12 @@ Therefore:
  * All game-related info (i.e. object creation) is defined in `game/`, which is also where the art lives.
  * System initialisation (i.e. graphics and sound) lives in `sys/`. Don't go in there. It's terrifying.
 
+## Projects using t3d-bones
+
+ * [vlrtt](github.com/eightyeight/vlrtt): a real-time tactics game with vim-like controls
+
+[Let me know](http://www.garagegames.com/account/profile/79478) if you use t3d-bones!
+
 ## How to get started
 
 Want to start your own project based off `t3d-bones`?
