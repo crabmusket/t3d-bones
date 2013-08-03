@@ -18,5 +18,5 @@ new GameTSCtrl(PlayGui) {
    forceFOV = "0";
    enabled = "1";
    helpTag = "0";
-   noCursor = "1";
+   noCursor = "0";
 };
