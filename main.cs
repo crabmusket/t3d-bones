@@ -53,7 +53,7 @@ exec("console/main.cs");
 
 // Load up game code.
 //exec("tutorials/02_camera_movement/main.cs");
-exec("tutorials/03_add_a_player/main.cs");
+exec("game/main.cs");
 
 // Called when we connect to the local game.
 function GameConnection::onConnect(%client) {
