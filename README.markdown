@@ -8,7 +8,7 @@ A truly skeletal starter/learning project for [Torque 3D][].
 
 `t3d-bones` provides an almost completely minimal example of how to start the T3D engine, load a level and create a camera to view it through.
 Oh, and the console is still there, but removing it is as simple as removing one line of code.
-The template has been structured as little as possible, but I found that moving it towards a modular format helped mae the code understandable.
+The template has been structured as little as possible, but I found that moving it towards a modular format helped make the code understandable.
 Therefore:
 
  * `main.cs` handles engine initialisation, loads up the console, and finally the base game.
