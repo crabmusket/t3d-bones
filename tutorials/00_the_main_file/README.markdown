@@ -13,7 +13,7 @@ But hey, you might like to hear it again, or without all the template scripts ge
 ## First things first
 
 The very first thing we do in the mainfile is open a splash window.
-This really isn't very necessary, and it's barely visible when your app is as small as this one.
+This really isn't necessary, and it's barely visible when your app is as small as this one.
 But hey, why not?
 
     displaySplashWindow("splash.bmp");
@@ -21,7 +21,7 @@ But hey, why not?
 Next we'll configure the console and add an opportunity to debug scripts by tracing them.
 I'm really not sure what the console log mode does at this point, but `2` seems like a good value for it.
 The trace function, if called with `true`, will print out whenever you enter or exit a script function.
-It's a bit crazy to trace your entire program - it's more useful around specific function calls you need to debug - but T32D has a hook like this, so I do too.
+It's a bit crazy to trace your entire program - it's more useful around specific function calls you need to debug - but T2D has a hook like this, so I do too.
 
     setLogMode(2);
     trace(false);
@@ -89,11 +89,11 @@ The first of them is the `onConnect` callback of the `GameConnection` class.
 
 This function is called when a client connects to the game.
 In a networked game, this may represent an actual client connection from the internet, but in our case, it's always a local connection from inside the engine.
-Don't worry - the internet isn't actually involved.
-Torque just likes to pretend it is.
+Don't worry - no data is actually being transferred over the internet.
+Torque just likes to pretend there is.
 
 The function starts the datablock transmission to the client.
-This basically copies all the server's datablocks (pieces of static information that specify gameplay) to the client.
+This basically copies all the server's datablocks (pieces of static information that specify object properties) to the client.
 Again, over the internet this would actually do something useful - here, since the client and server share the same memory space, it's just a hassle.
 I'm sure there must be some way to bypass this step, but I haven't figured it out yet.
 
