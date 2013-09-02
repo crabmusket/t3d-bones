@@ -5,6 +5,6 @@ The README.markdown files in each tutorial guide you through the code for that t
 They are all complete 'games' under the `t3d-bones` structure, so they can all be run instead of the default `game/main.cs` file.
 
 The tutorials don't necessarily have to be completed in a linear sequence, though if one tutorial follows directly on from another I'll mention it in the header.
-In particular, I can recommend skipping tutorial [00](./00_the_main_file) and going straight to [01](./01_load_a_basic_level).
+In particular, I can recommend skipping [the_main_file](./the_main_file) and going straight to [basic_level](./basic_level).
 
 Enjoy!
