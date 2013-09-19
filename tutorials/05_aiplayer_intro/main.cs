@@ -59,6 +59,25 @@ function PlayGui::onMouseDown(%this, %screenPos, %worldPos, %vector) {
    }
 }
 
+// Called when the right mouse button is clicked on the play area.
+function PlayGui::onRightMouseDown(%this, %screenPos, %worldPos, %vector) {
+   %targetPos = VectorAdd(%worldPos, VectorScale(%vector, 1000));
+   %hit = ContainerRayCast(%worldPos, %targetPos,
+      $TypeMasks::StaticObjectType | $TypeMasks::ShapeBaseObjectType);
+   if(%hit) {
+      // The first word in a raycast result is the object that was hit.
+      %hitObj = getWord(%hit, 0);
+      %hitPos = getWords(%hit, 1, 3);
+      // We want to test whether we've clicked the player - so check the object's
+      // name.
+      if(%hitObj.name $= ThePlayer) {
+         ThePlayer.clearAim();
+      } else {
+         ThePlayer.setAimLocation(%hitPos);
+      }
+   }
+}
+
 //-----------------------------------------------------------------------------
 function onStart() {
    new SimGroup(GameGroup) {
