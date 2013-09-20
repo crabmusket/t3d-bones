@@ -19,6 +19,7 @@ Therefore:
 ## Projects using t3d-bones
 
  * [vlrtt](github.com/eightyeight/vlrtt): a real-time tactics game with vim-like controls
+ * [sspt](github.com/lukaspj/sspt): a side-scroller prototype
 
 [Let me know](http://www.garagegames.com/account/profile/79478) if you use t3d-bones!
 
