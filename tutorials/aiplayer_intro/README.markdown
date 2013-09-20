@@ -1,7 +1,7 @@
 # AIPlayer: an introduction
 
-This tutorial will teach you the basics of the `AIPlayer` class, the base for non-FPS characters in Torque.
-Even if you want to make side-scrolling or top-down games, `AIPlayer` is a good choice.
+This tutorial will teach you the basics of the `AIPlayer` class, the base for non-player characters in Torque.
+If you want to make side-scrolling or top-down games, `AIPlayer` is even a good choice for your player character.
 It's slightly misnamed - it doesn't really do any AI - but it's very useful all the same.
 We'll make a simple level where you can click the ground to make an `AIPlayer` move around.
 
@@ -10,8 +10,8 @@ so go ahead and look at the [camera movement][02] and [player][03] tutorials if 
 The code, as usual, is in the [`main.cs`](./main.cs) file.
 Check it out!
 
- [02]: ../02_camera_movement
- [03]: ../03_add_a_player
+ [02]: ../camera_movement
+ [03]: ../fps_player
 
 ## Disclaimer: it's not really AI!
 
