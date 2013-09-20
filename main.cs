@@ -25,12 +25,19 @@ initLightingSystems("Basic Lighting");
 // Start audio.
 sfxStartup();
 
+// Provide stubs so we don't get console errors. If you actually want to use
+// any of these functions, be sure to remove the empty definition here.
+function onDatablockObjectReceived() {}
+function onGhostAlwaysObjectReceived() {}
+function onGhostAlwaysStarted() {}
+function updateTSShapeLoadProgress() {}
+
 //-----------------------------------------------------------------------------
 // Load console.
 exec("console/main.cs");
 
 // Load up game code.
-exec("tutorials/05_aiplayer_intro/main.cs");
+exec("game/main.cs");
 
 // Called when we connect to the local game.
 function GameConnection::onConnect(%client) {
@@ -51,3 +58,17 @@ new GameConnection(ServerConnection);
 ServerConnection.connectLocal();
 
 onStart();
+
+//-----------------------------------------------------------------------------
+// Called when the engine is shutting down.
+function onExit() {
+   // Clean up game objects and so on.
+   onEnd();
+
+   // Delete the connection if it's still there.
+   ServerConnection.delete();
+   ServerGroup.delete();
+
+   // Delete all the datablocks.
+   deleteDataBlocks();
+}

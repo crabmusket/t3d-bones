@@ -101,12 +101,7 @@ function onStart() {
 }
 
 //-----------------------------------------------------------------------------
-function onExit() {
+function onEnd() {
    GameGroup.delete();
    MoveMap.delete();
-
-   ServerConnection.delete();
-   ServerGroup.delete();
-
-   deleteDataBlocks();
 }

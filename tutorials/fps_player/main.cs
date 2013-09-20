@@ -73,11 +73,6 @@ function pitch(%amount) {
 }
 
 //-----------------------------------------------------------------------------
-function onExit() {
+function onEnd() {
    GameGroup.delete();
-
-   ServerConnection.delete();
-   ServerGroup.delete();
-
-   deleteDataBlocks();
 }

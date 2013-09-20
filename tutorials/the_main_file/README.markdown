@@ -59,6 +59,18 @@ This is a single function call:
 
     sfxStartup();
 
+## Stub methods
+
+At this point, I provide a couple of function stubs (i.e. empty functions).
+They're functions called by the C++ engine code during the loading sequence.
+If we don't define them at all, they print warnings to the console, but we don't want to actually use them -
+so we'll just define them as empty to stop the warnings.
+
+    function onDatablockObjectReceived() {}
+    function onGhostAlwaysObjectReceived() {}
+    function onGhostAlwaysStarted() {}
+    function updateTSShapeLoadProgress() {}
+
 ## The console
 
 At this point, I choose to load up the console scripts and GUIs.
@@ -117,3 +129,22 @@ Finally, all we need to do is call the startup routine defined by the game scrip
     onStart();
 
 And we're off!
+
+## Engine the game
+
+When someone calls the `quit()` function, the engine shuts down.
+It calls the `onExit` function first, though, to give scripts a chance to clean themselves up.
+To reduce the amount of boilerplate code modules need to write, I define the `onExit` function,
+which cleans up the objects created in this file, as well as providing an `onEnd` hook, symmetrical with the call to `onStart` when the game first starts.
+
+    function onExit() {
+       onEnd();
+
+       ServerConnection.delete();
+       ServerGroup.delete();
+
+       deleteDataBlocks();
+    }
+
+And that's it for your basic `main.cs`!
+Now have a look at some other tutorials to see how to use the structure I've set up.

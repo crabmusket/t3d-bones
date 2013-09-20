@@ -127,35 +127,24 @@ Hurrah!
 We now have enough information to actually go ahead and run the game!
 Start 'er up!
 
-## The onExit function
+## The onEnd function
 
 Unfortunately, you may have noticed that the game is a bit obnoxious at this stage: if you manage to shut it down by closing the window, it will crash!
 This is because when the engine exits, all those objects we created are still hanging around, and funny stuff happens when you try to close the engine with objects remaining.
 What we need to do is define another function that cleans up all those objects.
 
-`onExit` to the rescue!
-This function, unlike `onStart`, _is_ called directly from the engine code when the engine shuts down.
-So if you call it anything else, the engine will be confused and not work.
+`onEnd` to the rescue!
+This function, like `onStart`, is called in `main.cs` when the engine shuts down.
+So if you want to call it something else, you know where to look!
 
-Given all the objects we created  in `onStart`, let's have a look at an `onExit` function that might be suitable:
+Given all the objects we created  in `onStart`, let's have a look at an `onEnd` function that might be suitable:
 
-    function onExit() {
+    function onEnd() {
         GameObjects.delete();
-
-        ServerConnection.delete();
-        ServerGroup.delete();
-
-        deleteDataBlocks();
     }
 
-See that first line?
 `SimGroup` is a special container class, sort of like a folder in a computer.
 When you delete it, all the objects inside itare deleted, too - so we don't have to delete them all one by one!
-
-The other parts of the function destroy special objects related to the server and our connection to it.
-They're created out in `main.cs`, so don't worry too much about them.
-Do notice, though, the call of the `deleteDatablocks` function.
-What do you think it does?
 
 Right, now you should be able to run the game and close it without any crashing!
 
@@ -170,6 +159,7 @@ Add this to the end of the `onStart` function:
 This function calls the `bind` _method_ of the `GlobalActionMap` object.
 This is a special object of the `ActionMap` class that responds to keyboard and mouse (and any other device) inputs.
 This function call _binds_ the `quit` function to be called when we press `escape` on the `keyboard`.
+That causes `onExit` to be called, which is defined in `main.cs`, which then calls our `onEnd` function we defined above.
 
 Now try running the engine, and hit escape - goodbye, Torque!
 
