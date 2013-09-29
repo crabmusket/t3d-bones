@@ -3,15 +3,15 @@
 In this tutorial, we'll extend our knowledge of Torque's input system, using the mouse and keyboard to fly the camera around.
 This tutorial introduces an important idea: Torque's move manager.
 
-I'm basing my work on the file [`tutorials/02_camera_movement/main.cs`][game.cs], so open it up and take a look.
-To load the completed tutorial in `t3d-bones`, change `exec("game/main.cs");` in [`main.cs`][main.cs] to `exec("tutorials/02_camera_movement/main.cs");`.
+I'm basing this tutorial on the file [`tutorials/fly_camera/main.cs`][gameMain], so open it up and take a look.
+To load the completed tutorial in `t3d-bones`, change `exec("game/main.cs");` in [`main.cs`][main.cs] to `exec("tutorials/fly_camera/main.cs");`.
 
  [main.cs]: ../../main.cs
- [game.cs]: ./main.cs
+ [gameMain]: ./main.cs
 
 ## Advanced keybinds
 
-In tutorial [`01_load_a_basic_level`][01], you used a keybind to allow you to close the game with the escape key.
+In tutorial [`basic_level`][01], you used a keybind to allow you to close the game with the escape key.
 Now, we'll dig into some more uses of the keybind system.
 Like these, which you can add to the bottom of `onStart`:
 
@@ -32,7 +32,7 @@ The camera moves now!
 Is this some form of black magic?
 You might say so...
 
- [01]: ../01_load_a_basic_level
+ [01]: ../basic_level
 
 ## The move manager (`$mv*`)
 

@@ -1,7 +1,7 @@
 # Adding a player
 
 In this instalment, we'll add one of the core elements of many games: the player character!
-This tutorial builds directly on the work done in tutorial [02](../02_camera_movement).
+This tutorial builds directly on the work done in [fly_camera](../fly_camera).
 As always, you can load this script up in `t3d-bones` by changing `exec("game/main.cs");` to `exec("tutorials/03_add_a_player/main.cs");` in [`main.cs`](../../main.cs).
 Let's get started.
 
