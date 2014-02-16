@@ -30,8 +30,8 @@ new GuiControlProfile(GuiConsoleProfile)
    fontColorNA = "255 0 0";
    fontColors[6] = "100 100 100";
    fontColors[7] = "100 100 0";
-   fontColors[8] = "0 0 100";
-   fontColors[9] = "0 100 0";
+   fontColors[8] = "100 100 200";
+   fontColors[9] = "50 200 50";
    category = "Core";
 };
 
@@ -54,7 +54,7 @@ if(!isObject(ConsoleScrollProfile))
 new GuiControlProfile(ConsoleScrollProfile : GuiScrollProfile)
 {
 	opaque = true;
-	fillColor = "0 0 0 175";
+	fillColor = "20 20 20";
 	border = 1;
 	//borderThickness = 0;
 	borderColor = "0 0 0";
