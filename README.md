@@ -1,6 +1,6 @@
 # t3d-bones
 
-A truly skeletal starter/learning project for [Torque 3D][].
+A truly skeletal starter/learning project for [Torque 3D][]. Check out the [releases][] page for demos.
 
  [Torque 3D]: https://github.com/GarageGames/Torque3D
 
@@ -27,7 +27,7 @@ Therefore:
 
 Want to start your own project based off `t3d-bones`?
 Awesome!
-To get started, you can download a zip of this repository with binaries [from my DropBox][package] (5MB).
+To get started, you can download a zip of this repository with binaries from [the releases page][releases] (7MB).
 If you're a `git` user, you can also just clone this repository somewhere:
 
     git clone git@github.com:eightyeight/t3d-bones.git myAwesomeGame
@@ -37,8 +37,7 @@ And if you don't want the tutorials, you can just delete the folder:
     rm -rf myAwesomeGame/tutorials
 
 In the interests of keeping the repository small and focused on the scripts, there are no binary files included.
-You can either copy them from your main T3D installation, or download Empty.dll and Empty.exe [from DropBox][binaries] (4.5MB).
+You can either copy them from your main T3D installation, or download one of the [releases][].
 And you're ready to go!
 
- [package]: https://www.dropbox.com/s/e07civwvkvdjvd7/t3d-bones.zip 
- [binaries]: https://www.dropbox.com/s/6ggmqcps07ky5pi/t3d-bones-binaries.zip
+ [releases]: https://github.com/eightyeight/t3d-bones/releases
