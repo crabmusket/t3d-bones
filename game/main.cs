@@ -31,7 +31,7 @@ datablock CameraData(Observer) {};
 //-----------------------------------------------------------------------------
 // And a material to give the ground some colour (even if it's just white).
 singleton Material(BlankWhite) {
-   diffuseColor[0] = "1 1 1";
+   diffuseColor[0] = "White";
 };
 
 //-----------------------------------------------------------------------------
@@ -86,6 +86,7 @@ function onStart() {
 //-----------------------------------------------------------------------------
 // Called when the engine is shutting down.
 function onEnd() {
+   ServerConnection.delete();
    // Delete the objects we created.
    GameGroup.delete();
 }

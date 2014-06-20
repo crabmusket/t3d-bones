@@ -140,9 +140,7 @@ which cleans up the objects created in this file, as well as providing an `onEnd
     function onExit() {
        onEnd();
 
-       ServerConnection.delete();
        ServerGroup.delete();
-
        deleteDataBlocks();
     }
 

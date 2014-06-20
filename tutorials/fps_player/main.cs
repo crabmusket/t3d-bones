@@ -74,5 +74,7 @@ function pitch(%amount) {
 
 //-----------------------------------------------------------------------------
 function onEnd() {
+   ServerConnection.delete();
    GameGroup.delete();
+   MoveMap.delete();
 }

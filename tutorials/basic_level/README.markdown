@@ -140,6 +140,7 @@ So if you want to call it something else, you know where to look!
 Given all the objects we created  in `onStart`, let's have a look at an `onEnd` function that might be suitable:
 
     function onEnd() {
+        ServerConnection.delete();
         GameObjects.delete();
     }
 

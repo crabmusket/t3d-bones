@@ -85,6 +85,7 @@ function onGhostAlwaysObjectReceived() {}
 //-----------------------------------------------------------------------------
 // Called when the engine is shutting down.
 function onEnd() {
+   ServerConnection.delete();
    // Delete the objects we created.
    GameGroup.delete();
 }

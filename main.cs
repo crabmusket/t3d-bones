@@ -65,10 +65,7 @@ function onExit() {
    // Clean up game objects and so on.
    onEnd();
 
-   // Delete the connection if it's still there.
-   ServerConnection.delete();
+   // Delete server-side objects and datablocks.
    ServerGroup.delete();
-
-   // Delete all the datablocks.
    deleteDataBlocks();
 }

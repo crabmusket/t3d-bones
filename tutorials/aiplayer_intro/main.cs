@@ -102,6 +102,6 @@ function onStart() {
 
 //-----------------------------------------------------------------------------
 function onEnd() {
+   ServerConnection.delete();
    GameGroup.delete();
-   MoveMap.delete();
 }
