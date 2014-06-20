@@ -15,6 +15,7 @@ Therefore:
  * All the console scripts and GUIs are defined in `console/`.
  * All game-related info (i.e. object creation) is defined in `game/`, which is also where the art lives.
  * System initialisation (i.e. graphics and sound) lives in `sys/`. Don't go in there. It's terrifying.
+ * Each folder in `tutorials/` is like a custom `game/` folder specific to some learning goal.
 
 ## Projects using t3d-bones
 
