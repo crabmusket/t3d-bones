@@ -40,17 +40,18 @@ exec("console/main.cs");
 exec("game/main.cs");
 
 // Called when we connect to the local game.
-function GameConnection::onConnect(%client) {
-   %client.transmitDataBlocks(0);
+function GameConnection::onConnect(%this) {
+   %this.transmitDataBlocks(0);
 }
 
 // Called when all datablocks from above have been transmitted.
 function GameConnection::onDataBlocksDone(%client) {
    closeSplashWindow();
    Canvas.showWindow();
+
    // Start sending ghosts to the client.
-   %client.activateGhosting();
-   %client.onEnterGame();
+   %this.activateGhosting();
+   %this.onEnterGame();
 }
 
 // Create a local game server and connect to it.
