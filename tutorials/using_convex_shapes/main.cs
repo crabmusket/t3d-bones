@@ -63,9 +63,6 @@ function onStart() {
       }
    }
 
-   // Allow us to exit the game...
-   GlobalActionMap.bind("keyboard", "escape", "quit");
-
    // Camera movement binds.
    new ActionMap(MoveMap);
    MoveMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
