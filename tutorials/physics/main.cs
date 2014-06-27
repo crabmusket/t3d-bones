@@ -106,8 +106,6 @@ function onStart() {
                 SPC 2 * %i + 5;
       });
    }
-
-   GlobalActionMap.bind("keyboard", "escape", "quit");
 }
 
 //-----------------------------------------------------------------------------

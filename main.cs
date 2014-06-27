@@ -57,6 +57,10 @@ new GameConnection(ServerConnection);
 // This calls GameConnection::onConnect.
 ServerConnection.connectLocal();
 
+// Allow us to exit the game...
+GlobalActionMap.bind("keyboard", "escape", "quit");
+
+// Start game-specific scripts.
 onStart();
 
 //-----------------------------------------------------------------------------
