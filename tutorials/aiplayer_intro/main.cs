@@ -96,8 +96,6 @@ function onStart() {
          castShadows = true;
       };
    };
-
-   GlobalActionMap.bind("keyboard", "escape", "quit");
 }
 
 //-----------------------------------------------------------------------------
