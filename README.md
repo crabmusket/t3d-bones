@@ -42,3 +42,12 @@ You can either copy them from your main T3D installation, or download one of the
 And you're ready to go!
 
  [releases]: https://github.com/eightyeight/t3d-bones/releases
+
+## Acknowledgments
+
+ * Frank Carney's [ScriptT3D][] resource adds a Python interface to the engine which my work is based on.
+ * [Python logo][] by Xelus is licensed under [CC BY 3.0][].
+
+ [ScriptT3D]: http://www.garagegames.com/community/resources/view/21706
+ [Python logo]: http://blenderartists.org/forum/showthread.php?225742-Free-Blender-3D-model-(Python-Logo)
+ [CC BY 3.0]: http://creativecommons.org/licenses/by/3.0/
