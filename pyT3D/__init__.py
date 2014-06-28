@@ -138,11 +138,11 @@ class _New:
             if len(args) is 2:
                 name = args[0]
                 props = args[1]
-            else if len(args) is 1:
+            elif len(args) is 1:
                 if isinstance(args[0], basestring):
                     name = args[0]
                 else:
-                    props = args[1]
+                    props = args[0]
 
             makeStr = 'return new {0}({1}) {{'.format(className, name)
             for key, val in props.items():
