@@ -78,9 +78,6 @@ function onStart() {
          castShadows = true;
       };
    };
-
-   // Allow us to exit the game...
-   GlobalActionMap.bind("keyboard", "escape", "quit");
 }
 
 //-----------------------------------------------------------------------------

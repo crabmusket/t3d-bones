@@ -1,9 +1,6 @@
 from pyT3D import T3D
 import game
 
-def doNothing(*args):
-    pass
-
 def t3dBones():
     T3D.displaySplashWindow('splash.bmp')
     T3D.setLogMode(2)
@@ -16,11 +13,6 @@ def t3dBones():
     T3D.initPostEffects()
     T3D.sfxStartup()
 
-    T3D.on('onDatablockObjectReceived', doNothing)
-    T3D.on('onGhostAlwaysObjectReceived', doNothing)
-    T3D.on('onGhostAlwaysStarted', doNothing)
-    T3D.on('updateTSShapeLoadProgress', doNothing)
-
     T3D.load('console')
     game.setup(T3D)
 
@@ -31,13 +23,14 @@ def t3dBones():
     @T3D.callback('GameConnection')
     def onDatablocksDone(self, a):
         self.activateGhosting()
+        self.onEnterGame()
 
-    ServerGroup = T3D.new.SimGroup()
-    ServerConnection = T3D.new.GameConnection()
+    ServerGroup = T3D.new.SimGroup('ServerGroup')
+    ServerConnection = T3D.new.GameConnection('ServerConnection')
     ServerConnection.connectLocal()
 
     T3D.get.GlobalActionMap.bind('keyboard', 'escape', 'quit')
-    game.start(T3D, ServerConnection)
+    game.start(T3D)
 
     @T3D.callback()
     def onExit():

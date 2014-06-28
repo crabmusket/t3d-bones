@@ -153,6 +153,8 @@ class SimObject(object):
    def __init__(self, objRef):
       # store int or name of simobject
       object.__setattr__(self, "simobject",objRef)   
+   def __str__(self):
+      return self.getId()
    # do not redefine __str__ or __repr__!  it messes all sorts of stuff up      
    def __getattr__(self, name):
       # lookup function and return callable object

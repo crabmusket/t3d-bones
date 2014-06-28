@@ -47,9 +47,6 @@ class _T3D:
             self.call(name, *args)
         return caller
 
-    def method(self, obj, function, *args):
-        return call('{0}.{1}'.format(obj, function), *args)
-
     def on(self, callback, do):
         splitted = callback.split('::')
         if len(splitted) > 1:
@@ -62,7 +59,7 @@ class _T3D:
         return SimObjects[o]
 
     def load(self, fileName):
-        if not fileName.endswith('.cs'):
+        if '.' not in fileName:
             if not fileName.endswith('/'):
                 fileName += '/'
             fileName += 'main.cs'
@@ -135,14 +132,24 @@ def consolePrint(level, data):
 
 class _New:
     def __getattr__(self, className):
-        def new(name='', props=None):
+        def new(*args):
+            name = ''
+            props = {}
+            if len(args) is 2:
+                name = args[0]
+                props = args[1]
+            else if len(args) is 1:
+                if isinstance(args[0], basestring):
+                    name = args[0]
+                else:
+                    props = args[1]
+
             makeStr = 'return new {0}({1}) {{'.format(className, name)
-            if props is not None:
-                for key, val in props.items():
-                    if isinstance(val, basestring):
-                        makeStr += '{0} = "{1}";'.format(key, val)
-                    else:
-                        makeStr += '{0} = {1};'.format(key, val)
+            for key, val in props.items():
+                if isinstance(val, basestring):
+                    makeStr += '{0} = "{1}";'.format(key, val)
+                else:
+                    makeStr += '{0} = {1};'.format(key, val)
             makeStr += '};'
             return SimObjects[Engine.evaluate(makeStr)]
         return new
