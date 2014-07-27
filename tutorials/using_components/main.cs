@@ -12,6 +12,7 @@ singleton BehaviorTemplate(CameraTemplate) {
 function CameraTemplate::onAdd(%inst) {
    %inst.owner.scopeToClient(%inst.client);
    %inst.scopeToClient(%inst.client);
+   %inst.client.setControlObject(%inst.owner);
 }
 
 //-----------------------------------------------------------------------------
@@ -23,8 +24,6 @@ function GameConnection::onEnterGame(%client) {
          client = %client;
       };
    };
-
-   %client.setControlObject(TheCamera);
    GameGroup.add(TheCamera);
 
    Canvas.setContent(PlayGui);
