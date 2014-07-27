@@ -46,6 +46,8 @@ function GameConnection::onConnect(%client) {
 
 // Called when all datablocks from above have been transmitted.
 function GameConnection::onDataBlocksDone(%client) {
+   closeSplashWindow();
+   Canvas.showWindow();
    // Start sending ghosts to the client.
    %client.activateGhosting();
    %client.onEnterGame();
