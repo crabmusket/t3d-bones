@@ -10,17 +10,17 @@ singleton BehaviorTemplate(CameraTemplate) {
 };
 
 function CameraTemplate::onAdd(%inst) {
-   %inst.owner.scopeToClient(%inst.owner.client);
-   %inst.scopeToClient(%inst.owner.client);
+   %inst.owner.scopeToClient(%inst.client);
+   %inst.scopeToClient(%inst.client);
 }
 
 //-----------------------------------------------------------------------------
 function GameConnection::onEnterGame(%client) {
    new Entity(TheCamera) {
       position = "0 0 2";
-      client = %client;
       new CameraBehaviorInstance() {
          template = CameraTemplate;
+         client = %client;
       };
    };
 
