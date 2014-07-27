@@ -12,7 +12,7 @@ singleton BehaviorTemplate(CameraTemplate) {
 function CameraTemplate::onAdd(%inst) {
    %inst.owner.scopeToClient(%inst.client);
    %inst.scopeToClient(%inst.client);
-   %inst.client.setControlObject(%inst.owner);
+   %inst.client.setCameraObject(%inst.owner);
 }
 
 //-----------------------------------------------------------------------------
