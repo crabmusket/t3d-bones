@@ -125,10 +125,28 @@ class _T3D:
 
         # Script object constructor
         self.new = _New()
+        self.singleton = _Singleton('singleton')
+        self.datablock = _Singleton('datablock')
 
 # console output callback. TODO: add nice colours based on level
 def consolePrint(level, data):
     print data
+
+def valueToString(val):
+    if isinstance(val, basestring):
+        return '"{0}"'.format(val)
+    else:
+        return '{0}'.format(val)
+
+def propertiesToString(props):
+    makeStr = ''
+    for prop, value in props.items():
+        if isinstance(value, list):
+            for i, val in enumerate(value):
+                makeStr += '{0}[{1}] = {2};'.format(prop, i, valueToString(val))
+        else:
+            makeStr += '{0} = {1};'.format(prop, valueToString(value))
+    return makeStr
 
 class _New:
     def __getattr__(self, className):
@@ -143,15 +161,24 @@ class _New:
                     name = args[0]
                 else:
                     props = args[0]
-
             makeStr = 'return new {0}({1}) {{'.format(className, name)
-            for key, val in props.items():
-                if isinstance(val, basestring):
-                    makeStr += '{0} = "{1}";'.format(key, val)
-                else:
-                    makeStr += '{0} = {1};'.format(key, val)
+            makeStr += propertiesToString(props)
             makeStr += '};'
             return SimObjects[Engine.evaluate(makeStr)]
+        self.__dict__[className] = new
+        return new
+
+class _Singleton:
+    def __init__(self, typeName):
+        self.typeName = typeName
+    def __getattr__(self, className):
+        def new(name, props={}):
+            makeStr = '{0} {1} ({2}) {{'.format(self.typeName, className, name)
+            makeStr += propertiesToString(props)
+            makeStr += '};'
+            Engine.evaluate(makeStr)
+            return SimObjects[name]
+        self.__dict__[className] = new
         return new
 
 T3D = _T3D()
