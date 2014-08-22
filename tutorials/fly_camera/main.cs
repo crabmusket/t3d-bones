@@ -18,6 +18,7 @@ function GameConnection::onEnterGame(%client) {
    %client.setControlObject(TheCamera);
    GameGroup.add(TheCamera);
 
+   PlayGui.noCursor = true;
    Canvas.setContent(PlayGui);
    activateDirectInput();
 }
