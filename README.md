@@ -1,6 +1,7 @@
 # t3d-bones
 
-A truly skeletal starter/learning project for [Torque 3D][]. Check out the [releases][] page for demos.
+A truly skeletal starter/learning project for [Torque 3D][].
+Check out the [releases][] page for demos, and [tutorials](./tutorials) for, well, tutorials.
 
  [Torque 3D]: https://github.com/GarageGames/Torque3D
 
