@@ -21,13 +21,13 @@
 //-----------------------------------------------------------------------------
 
 
-$LightRayPostFX::brightScalar = 0.75;
-$LightRayPostFX::numSamples = 40;
-$LightRayPostFX::density = 0.94;
-$LightRayPostFX::weight = 5.65;
-$LightRayPostFX::decay = 1.0;
-$LightRayPostFX::exposure = 0.0005;
-$LightRayPostFX::resolutionScale = 1.0;
+$LightRayFx::brightScalar = 0.75;
+$LightRayFx::numSamples = 40;
+$LightRayFx::density = 0.94;
+$LightRayFx::weight = 5.65;
+$LightRayFx::decay = 1.0;
+$LightRayFx::exposure = 0.0005;
+$LightRayFx::resolutionScale = 1.0;
 
 
 singleton ShaderData( LightRayOccludeShader )
@@ -53,7 +53,7 @@ singleton GFXStateBlockData( LightRayStateBlock : PFX_DefaultStateBlock )
    samplerStates[1] = SamplerClampLinear;     
 };
 
-singleton PostEffect( LightRayPostFX )
+singleton PostEffect( LightRayFX )
 {
    isEnabled = false;
    allowReflectPass = false;
@@ -79,19 +79,19 @@ singleton PostEffect( LightRayPostFX )
    };
 };
 
-function LightRayPostFX::preProcess( %this )
+function LightRayFx::preProcess( %this )
 {   
-   %this.targetScale = $LightRayPostFX::resolutionScale SPC $LightRayPostFX::resolutionScale;
+   %this.targetScale = $LightRayFx::resolutionScale SPC $LightRayFx::resolutionScale;
 }
 
-function LightRayPostFX::setShaderConsts( %this )
+function LightRayFx::setShaderConsts( %this )
 {
-   %this.setShaderConst( "$brightScalar", $LightRayPostFX::brightScalar );
+   %this.setShaderConst( "$brightScalar", $LightRayFx::brightScalar );
    
    %pfx = %this-->final;
-   %pfx.setShaderConst( "$numSamples", $LightRayPostFX::numSamples );
-   %pfx.setShaderConst( "$density", $LightRayPostFX::density );
-   %pfx.setShaderConst( "$weight", $LightRayPostFX::weight );
-   %pfx.setShaderConst( "$decay", $LightRayPostFX::decay );
-   %pfx.setShaderConst( "$exposure", $LightRayPostFX::exposure );
+   %pfx.setShaderConst( "$numSamples", $LightRayFx::numSamples );
+   %pfx.setShaderConst( "$density", $LightRayFx::density );
+   %pfx.setShaderConst( "$weight", $LightRayFx::weight );
+   %pfx.setShaderConst( "$decay", $LightRayFx::decay );
+   %pfx.setShaderConst( "$exposure", $LightRayFx::exposure );
 }

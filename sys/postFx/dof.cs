@@ -23,10 +23,10 @@
 /*
 
 ================================================================================
- The DOFPostEffect API
+ The DOFFx API
 ================================================================================
 
-DOFPostEffect::setFocalDist( %dist )
+DOFFx::setFocalDist( %dist )
 
 @summary
 This method is for manually controlling the focus distance. It will have no 
@@ -38,7 +38,7 @@ float distance in meters
 
 --------------------------------------------------------------------------------
 
-DOFPostEffect::setAutoFocus( %enabled )
+DOFFx::setAutoFocus( %enabled )
 
 @summary
 This method sets auto focus enabled or disabled. Makes use of the parameters set 
@@ -50,7 +50,7 @@ bool
 
 --------------------------------------------------------------------------------
 
-DOFPostEffect::setFocusParams( %nearBlurMax, %farBlurMax, %minRange, %maxRange, %nearSlope, %farSlope )
+DOFFx::setFocusParams( %nearBlurMax, %farBlurMax, %minRange, %maxRange, %nearSlope, %farSlope )
 
 Set the parameters that control how the near and far equations are calculated
 from the focal distance. If you are not using auto focus you will need to call
@@ -101,19 +101,19 @@ NOTE: These are not real callbacks! Hook these up to your code where appropriate
 function onSniperZoom()
 {
    // Parameterize how you want DOF to look.
-   DOFPostEffect.setFocusParams( 0.3, 0.3, 50, 500, -5, 5 );
+   DOFFx.setFocusParams( 0.3, 0.3, 50, 500, -5, 5 );
    
    // Turn on auto focus
-   DOFPostEffect.setAutoFocus( true );
+   DOFFx.setAutoFocus( true );
    
    // Turn on the PostEffect
-   DOFPostEffect.enable();
+   DOFFx.enable();
 }
 
 function onSniperUnzoom()
 {
    // Turn off the PostEffect
-   DOFPostEffect.disable();
+   DOFFx.disable();
 }
 
 Example2: Manually control DOF with the mouse wheel.
@@ -121,13 +121,13 @@ Example2: Manually control DOF with the mouse wheel.
 // Somewhere on startup...
 
 // Parameterize how you want DOF to look.
-DOFPostEffect.setFocusParams( 0.3, 0.3, 50, 500, -5, 5 );
+DOFFx.setFocusParams( 0.3, 0.3, 50, 500, -5, 5 );
 
 // Turn off auto focus
-DOFPostEffect.setAutoFocus( false );
+DOFFx.setAutoFocus( false );
 
 // Turn on the PostEffect
-DOFPostEffect.enable();
+DOFFx.enable();
 
 
 NOTE: These are not real callbacks! Hook these up to your code where appropriate!
@@ -136,19 +136,19 @@ function onMouseWheelUp()
 {
    // Since setFocalDist is really just a wrapper to assign to the focalDist
    // dynamic field we can shortcut and increment it directly.
-   DOFPostEffect.focalDist += 8;
+   DOFFx.focalDist += 8;
 }
 
 function onMouseWheelDown()
 {
-   DOFPostEffect.focalDist -= 8;
+   DOFFx.focalDist -= 8;
 }
 */
 
 /// This method is for manually controlling the focal distance. It will have no 
 /// effect if auto focus is currently enabled. Makes use of the parameters set by 
 /// setFocusParams.
-function DOFPostEffect::setFocalDist( %this, %dist )
+function DOFFx::setFocalDist( %this, %dist )
 {    
    %this.focalDist = %dist;
 }
@@ -156,7 +156,7 @@ function DOFPostEffect::setFocalDist( %this, %dist )
 /// This method sets auto focus enabled or disabled. Makes use of the parameters set 
 /// by setFocusParams. When auto focus is enabled it determine the focal depth
 /// by performing a raycast at the screen-center.
-function DOFPostEffect::setAutoFocus( %this, %enabled )
+function DOFFx::setAutoFocus( %this, %enabled )
 {
    %this.autoFocusEnabled = %enabled;
 }
@@ -164,7 +164,7 @@ function DOFPostEffect::setAutoFocus( %this, %enabled )
 /// Set the parameters that control how the near and far equations are calculated
 /// from the focal distance. If you are not using auto focus you will need to call
 /// setFocusParams PRIOR to calling setFocalDist.
-function DOFPostEffect::setFocusParams( %this, %nearBlurMax, %farBlurMax, %minRange, %maxRange, %nearSlope, %farSlope )
+function DOFFx::setFocusParams( %this, %nearBlurMax, %farBlurMax, %minRange, %maxRange, %nearSlope, %farSlope )
 {
    %this.nearBlurMax = %nearBlurMax;
    %this.farBlurMax = %farBlurMax;
@@ -361,7 +361,7 @@ singleton ShaderData( PFX_DOFFinalShader )
 // PostEffects
 //-----------------------------------------------------------------------------
 
-function DOFPostEffect::onAdd( %this )
+function DOFFx::onAdd( %this )
 {
    // The weighted distribution of CoC value to the three blur textures
    // in the order small, medium, large. Most likely you will not need to
@@ -380,13 +380,13 @@ function DOFPostEffect::onAdd( %this )
    %this.farSlope = 5.0;
 }
 
-function DOFPostEffect::setLerpDist( %this, %d0, %d1, %d2 )
+function DOFFx::setLerpDist( %this, %d0, %d1, %d2 )
 {
    %this.lerpScale = -1.0 / %d0 SPC -1.0 / %d1 SPC -1.0 / %d2 SPC 1.0 / %d2;
    %this.lerpBias = 1.0 SPC ( 1.0 - %d2 ) / %d1 SPC 1.0 / %d2 SPC ( %d2 - 1.0 ) / %d2;
 }
 
-singleton PostEffect( DOFPostEffect )
+singleton PostEffect( DOFFx )
 {
    renderTime = "PFXAfterBin";
    renderBin = "GlowBin";      
@@ -410,7 +410,7 @@ singleton PostEffect( DOFBlurY )
    target = "$outTex";
 };
 
-DOFPostEffect.add( DOFBlurY );
+DOFFx.add( DOFBlurY );
 
 singleton PostEffect( DOFBlurX )
 {
@@ -420,7 +420,7 @@ singleton PostEffect( DOFBlurX )
    target = "#largeBlur";
 };
 
-DOFPostEffect.add( DOFBlurX );
+DOFFx.add( DOFBlurX );
 
 singleton PostEffect( DOFCalcCoC )
 {
@@ -431,7 +431,7 @@ singleton PostEffect( DOFCalcCoC )
    target = "$outTex";
 };
 
-DOFPostEffect.add( DOFCalcCoc );
+DOFFx.add( DOFCalcCoc );
   
 singleton PostEffect( DOFSmallBlur )
 {
@@ -441,7 +441,7 @@ singleton PostEffect( DOFSmallBlur )
    target = "$outTex";
 };
 
-DOFPostEffect.add( DOFSmallBlur );
+DOFFx.add( DOFSmallBlur );
    
 singleton PostEffect( DOFFinalPFX )
 {
@@ -454,14 +454,14 @@ singleton PostEffect( DOFFinalPFX )
    target = "$backBuffer";
 };
 
-DOFPostEffect.add( DOFFinalPFX );
+DOFFx.add( DOFFinalPFX );
 
 
 //-----------------------------------------------------------------------------
 // Scripts
 //-----------------------------------------------------------------------------
 
-function DOFPostEffect::setShaderConsts( %this )
+function DOFFx::setShaderConsts( %this )
 {
    if ( %this.autoFocusEnabled )
       %this.autoFocus();
@@ -510,7 +510,7 @@ function DOFPostEffect::setShaderConsts( %this )
    DOFFinalPFX.setShaderConst( "$dofLerpBias", %this.lerpBias );  
 }
 
-function DOFPostEffect::autoFocus( %this )
+function DOFFx::autoFocus( %this )
 {      
    if ( !isObject( ServerConnection ) ||   
         !isObject( ServerConnection.getCameraObject() ) )
@@ -550,9 +550,9 @@ function DOFPostEffect::autoFocus( %this )
 function reloadDOF()
 {
    exec( "./dof.cs" );
-   DOFPostEffect.reload();  
-   DOFPostEffect.disable();
-   DOFPostEffect.enable();
+   DOFFx.reload();  
+   DOFFx.disable();
+   DOFFx.enable();
 }
 
 function dofMetricsCallback()

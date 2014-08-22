@@ -47,7 +47,7 @@ singleton GFXStateBlockData( FogPassStateBlock : PFX_DefaultStateBlock )
 };
 
 
-singleton PostEffect( FogPostFx )
+singleton PostEffect( FogFx )
 {   
    // We forward render the reflection pass
    // so it does its own fogging.
@@ -93,7 +93,7 @@ singleton GFXStateBlockData( UnderwaterFogPassStateBlock : PFX_DefaultStateBlock
 };
 
 
-singleton PostEffect( UnderwaterFogPostFx )
+singleton PostEffect( UnderwaterFogFx )
 {
    oneFrameOnly = true;
    onThisFrame = false;

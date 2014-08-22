@@ -71,7 +71,7 @@ singleton ShaderData( PFX_EdgeAADebugShader )
    pixVersion = 3.0;
 };
 
-singleton PostEffect( EdgeDetectPostEffect )
+singleton PostEffect( EdgeDetectFx )
 {
    renderTime = "PFXBeforeBin";
    renderBin = "ObjTranslucentBin";      
@@ -86,7 +86,7 @@ singleton PostEffect( EdgeDetectPostEffect )
    isEnabled = false;
 };
 
-singleton PostEffect( EdgeAAPostEffect )
+singleton PostEffect( EdgeAAFx )
 {
    renderTime = "PFXAfterDiffuse";
    //renderBin = "ObjTranslucentBin";      
@@ -99,7 +99,7 @@ singleton PostEffect( EdgeAAPostEffect )
    target = "$backBuffer";
 };
    
-singleton PostEffect( Debug_EdgeAAPostEffect )
+singleton PostEffect( Debug_EdgeAAFx )
 {
    renderTime = "PFXAfterDiffuse";
    //renderBin = "ObjTranslucentBin";      

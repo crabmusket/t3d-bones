@@ -35,7 +35,7 @@ singleton GFXStateBlockData( GammaStateBlock : PFX_DefaultStateBlock )
    samplerStates[1] = SamplerClampLinear; 
 };
 
-singleton PostEffect( GammaPostFX )
+singleton PostEffect( GammaFx )
 {
    isEnabled = true;
    allowReflectPass = false;
@@ -48,16 +48,16 @@ singleton PostEffect( GammaPostFX )
    stateBlock = GammaStateBlock;
    
    texture[0] = "$backBuffer";  
-   texture[1] = $HDRPostFX::colorCorrectionRamp;  
+   texture[1] = $HDRFx::colorCorrectionRamp;  
 };
 
-function GammaPostFX::preProcess( %this )
+function GammaFx::preProcess( %this )
 {
-   if ( %this.texture[1] !$= $HDRPostFX::colorCorrectionRamp )
-      %this.setTexture( 1, $HDRPostFX::colorCorrectionRamp );         
+   if ( %this.texture[1] !$= $HDRFx::colorCorrectionRamp )
+      %this.setTexture( 1, $HDRFx::colorCorrectionRamp );         
 }
 
-function GammaPostFX::setShaderConsts( %this )
+function GammaFx::setShaderConsts( %this )
 {
    %clampedGamma  = mClamp( $pref::Video::Gamma, 0.001, 2.2);
    %this.setShaderConst( "$OneOverGamma", 1 / %clampedGamma );

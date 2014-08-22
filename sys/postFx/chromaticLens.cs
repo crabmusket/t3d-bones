@@ -50,7 +50,7 @@ singleton ShaderData( PFX_ChromaticLensShader )
    pixVersion = 3.0;
 };
 
-singleton PostEffect( ChromaticLensPostFX )
+singleton PostEffect( ChromaticLensFx )
 {
    renderTime = "PFXAfterDiffuse";
    renderPriority = 0.2;
@@ -63,7 +63,7 @@ singleton PostEffect( ChromaticLensPostFX )
    target = "$backBuffer";
 };
 
-function ChromaticLensPostFX::setShaderConsts( %this )
+function ChromaticLensFx::setShaderConsts( %this )
 {
    %this.setShaderConst( "$distCoeff", $CAPostFx::distCoeffecient );   
    %this.setShaderConst( "$cubeDistort", $CAPostFx::cubeDistortionFactor );    

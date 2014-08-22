@@ -44,7 +44,7 @@ singleton ShaderData( FXAA_ShaderData )
    pixVersion = 3.0;
 };
 
-singleton PostEffect( FXAA_PostEffect )
+singleton PostEffect( FXAAFx )
 {
    isEnabled = false;
    

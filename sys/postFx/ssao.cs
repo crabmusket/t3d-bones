@@ -22,99 +22,99 @@
 
 
 ///
-$SSAOPostFx::overallStrength = 2.0;
+$SSAOFx::overallStrength = 2.0;
 
 // TODO: Add small/large param docs.
 
 // The small radius SSAO settings.
-$SSAOPostFx::sRadius = 0.1;
-$SSAOPostFx::sStrength = 6.0;
-$SSAOPostFx::sDepthMin = 0.1;
-$SSAOPostFx::sDepthMax = 1.0;
-$SSAOPostFx::sDepthPow = 1.0;
-$SSAOPostFx::sNormalTol = 0.0;
-$SSAOPostFx::sNormalPow = 1.0;
+$SSAOFx::sRadius = 0.1;
+$SSAOFx::sStrength = 6.0;
+$SSAOFx::sDepthMin = 0.1;
+$SSAOFx::sDepthMax = 1.0;
+$SSAOFx::sDepthPow = 1.0;
+$SSAOFx::sNormalTol = 0.0;
+$SSAOFx::sNormalPow = 1.0;
 
 // The large radius SSAO settings.
-$SSAOPostFx::lRadius = 1.0;
-$SSAOPostFx::lStrength = 10.0;
-$SSAOPostFx::lDepthMin = 0.2;
-$SSAOPostFx::lDepthMax = 2.0;
-$SSAOPostFx::lDepthPow = 0.2;
-$SSAOPostFx::lNormalTol = -0.5;
-$SSAOPostFx::lNormalPow = 2.0;
+$SSAOFx::lRadius = 1.0;
+$SSAOFx::lStrength = 10.0;
+$SSAOFx::lDepthMin = 0.2;
+$SSAOFx::lDepthMax = 2.0;
+$SSAOFx::lDepthPow = 0.2;
+$SSAOFx::lNormalTol = -0.5;
+$SSAOFx::lNormalPow = 2.0;
 
 /// Valid values: 0, 1, 2
-$SSAOPostFx::quality = 0;
+$SSAOFx::quality = 0;
 
 ///
-$SSAOPostFx::blurDepthTol = 0.001;
+$SSAOFx::blurDepthTol = 0.001;
 
 /// 
-$SSAOPostFx::blurNormalTol = 0.95;
+$SSAOFx::blurNormalTol = 0.95;
 
 ///
-$SSAOPostFx::targetScale = "0.5 0.5";
+$SSAOFx::targetScale = "0.5 0.5";
 
 
-function SSAOPostFx::onAdd( %this )
+function SSAOFx::onAdd( %this )
 {  
    %this.wasVis = "Uninitialized";
    %this.quality = "Uninitialized";
 }
 
-function SSAOPostFx::preProcess( %this )
+function SSAOFx::preProcess( %this )
 {   
-   if ( $SSAOPostFx::quality !$= %this.quality )
+   if ( $SSAOFx::quality !$= %this.quality )
    {
-      %this.quality = mClamp( mRound( $SSAOPostFx::quality ), 0, 2 );
+      %this.quality = mClamp( mRound( $SSAOFx::quality ), 0, 2 );
       
       %this.setShaderMacro( "QUALITY", %this.quality );      
    }      
    
-   %this.targetScale = $SSAOPostFx::targetScale;
+   %this.targetScale = $SSAOFx::targetScale;
 }
 
-function SSAOPostFx::setShaderConsts( %this )
+function SSAOFx::setShaderConsts( %this )
 {      
-   %this.setShaderConst( "$overallStrength", $SSAOPostFx::overallStrength );
+   %this.setShaderConst( "$overallStrength", $SSAOFx::overallStrength );
 
    // Abbreviate is s-small l-large.   
    
-   %this.setShaderConst( "$sRadius",      $SSAOPostFx::sRadius );
-   %this.setShaderConst( "$sStrength",    $SSAOPostFx::sStrength );
-   %this.setShaderConst( "$sDepthMin",    $SSAOPostFx::sDepthMin );
-   %this.setShaderConst( "$sDepthMax",    $SSAOPostFx::sDepthMax );
-   %this.setShaderConst( "$sDepthPow",    $SSAOPostFx::sDepthPow );
-   %this.setShaderConst( "$sNormalTol",   $SSAOPostFx::sNormalTol );
-   %this.setShaderConst( "$sNormalPow",   $SSAOPostFx::sNormalPow );
+   %this.setShaderConst( "$sRadius",      $SSAOFx::sRadius );
+   %this.setShaderConst( "$sStrength",    $SSAOFx::sStrength );
+   %this.setShaderConst( "$sDepthMin",    $SSAOFx::sDepthMin );
+   %this.setShaderConst( "$sDepthMax",    $SSAOFx::sDepthMax );
+   %this.setShaderConst( "$sDepthPow",    $SSAOFx::sDepthPow );
+   %this.setShaderConst( "$sNormalTol",   $SSAOFx::sNormalTol );
+   %this.setShaderConst( "$sNormalPow",   $SSAOFx::sNormalPow );
    
-   %this.setShaderConst( "$lRadius",      $SSAOPostFx::lRadius );
-   %this.setShaderConst( "$lStrength",    $SSAOPostFx::lStrength );
-   %this.setShaderConst( "$lDepthMin",    $SSAOPostFx::lDepthMin );
-   %this.setShaderConst( "$lDepthMax",    $SSAOPostFx::lDepthMax );
-   %this.setShaderConst( "$lDepthPow",    $SSAOPostFx::lDepthPow );
-   %this.setShaderConst( "$lNormalTol",   $SSAOPostFx::lNormalTol );
-   %this.setShaderConst( "$lNormalPow",   $SSAOPostFx::lNormalPow );
+   %this.setShaderConst( "$lRadius",      $SSAOFx::lRadius );
+   %this.setShaderConst( "$lStrength",    $SSAOFx::lStrength );
+   %this.setShaderConst( "$lDepthMin",    $SSAOFx::lDepthMin );
+   %this.setShaderConst( "$lDepthMax",    $SSAOFx::lDepthMax );
+   %this.setShaderConst( "$lDepthPow",    $SSAOFx::lDepthPow );
+   %this.setShaderConst( "$lNormalTol",   $SSAOFx::lNormalTol );
+   %this.setShaderConst( "$lNormalPow",   $SSAOFx::lNormalPow );
    
    %blur = %this->blurY;
-   %blur.setShaderConst( "$blurDepthTol", $SSAOPostFx::blurDepthTol );
-   %blur.setShaderConst( "$blurNormalTol", $SSAOPostFx::blurNormalTol );   
+   %blur.setShaderConst( "$blurDepthTol", $SSAOFx::blurDepthTol );
+   %blur.setShaderConst( "$blurNormalTol", $SSAOFx::blurNormalTol );   
    
    %blur = %this->blurX;
-   %blur.setShaderConst( "$blurDepthTol", $SSAOPostFx::blurDepthTol );
-   %blur.setShaderConst( "$blurNormalTol", $SSAOPostFx::blurNormalTol );   
+   %blur.setShaderConst( "$blurDepthTol", $SSAOFx::blurDepthTol );
+   %blur.setShaderConst( "$blurNormalTol", $SSAOFx::blurNormalTol );   
    
    %blur = %this->blurY2;
-   %blur.setShaderConst( "$blurDepthTol", $SSAOPostFx::blurDepthTol );
-   %blur.setShaderConst( "$blurNormalTol", $SSAOPostFx::blurNormalTol );
+   %blur.setShaderConst( "$blurDepthTol", $SSAOFx::blurDepthTol );
+   %blur.setShaderConst( "$blurNormalTol", $SSAOFx::blurNormalTol );
       
    %blur = %this->blurX2;
-   %blur.setShaderConst( "$blurDepthTol", $SSAOPostFx::blurDepthTol );
-   %blur.setShaderConst( "$blurNormalTol", $SSAOPostFx::blurNormalTol );         
+   %blur.setShaderConst( "$blurDepthTol", $SSAOFx::blurDepthTol );
+   %blur.setShaderConst( "$blurNormalTol", $SSAOFx::blurNormalTol );         
 }
 
-function SSAOPostFx::onEnabled( %this )
+function SSAOFx::onEnabled( %this )
 {
    // This tells the AL shaders to reload and sample
    // from our #ssaoMask texture target. 
@@ -123,7 +123,7 @@ function SSAOPostFx::onEnabled( %this )
    return true;
 }
 
-function SSAOPostFx::onDisabled( %this )
+function SSAOFx::onDisabled( %this )
 {
   $AL::UseSSAOMask = false;
 }
@@ -173,7 +173,7 @@ singleton ShaderData( SSAOBlurXShader : SSAOBlurYShader )
 // PostEffects
 //-----------------------------------------------------------------------------
 
-singleton PostEffect( SSAOPostFx )
+singleton PostEffect( SSAOFx )
 {     
    allowReflectPass = false;
      
@@ -249,7 +249,7 @@ singleton PostEffect( SSAOPostFx )
 
 /// Just here for debug visualization of the 
 /// SSAO mask texture used during lighting.
-singleton PostEffect( SSAOVizPostFx )
+singleton PostEffect( SSAOVizFx )
 {      
    allowReflectPass = false;
         
@@ -268,7 +268,7 @@ singleton ShaderData( SSAOPowTableShader )
    pixVersion = 2.0;
 };
 
-singleton PostEffect( SSAOPowTablePostFx )
+singleton PostEffect( SSAOPowTableFx )
 {
    shader = SSAOPowTableShader;
    stateBlock = PFX_DefaultStateBlock;

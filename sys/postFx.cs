@@ -45,7 +45,7 @@ singleton ShaderData( PFX_PassthruShader )
 
 function initPostEffects()
 {
-   echo("\nInitializing PostFX System");
+   echo("\nInitializing PostFX Scripts");
    // First exec the scripts for the different light managers
    // in the lighting folder.
    

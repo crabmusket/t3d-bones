@@ -22,56 +22,56 @@
 
 
 /// Blends between the scene and the tone mapped scene.
-$HDRPostFX::enableToneMapping = 1.0;
+$HDRFx::enableToneMapping = 1.0;
 
 /// The tone mapping middle grey or exposure value used
 /// to adjust the overall "balance" of the image.
 ///
 /// 0.18 is fairly common value.
 ///
-$HDRPostFX::keyValue = 0.18;
+$HDRFx::keyValue = 0.18;
 
 /// The minimum luninace value to allow when tone mapping 
 /// the scene.  Is particularly useful if your scene very 
 /// dark or has a black ambient color in places.
-$HDRPostFX::minLuminace = 0.001;
+$HDRFx::minLuminace = 0.001;
 
 /// The lowest luminance value which is mapped to white.  This
 /// is usually set to the highest visible luminance in your 
 /// scene.  By setting this to smaller values you get a contrast
 /// enhancement.
-$HDRPostFX::whiteCutoff = 1.0;
+$HDRFx::whiteCutoff = 1.0;
 
 /// The rate of adaptation from the previous and new 
 /// average scene luminance. 
-$HDRPostFX::adaptRate = 2.0;
+$HDRFx::adaptRate = 2.0;
 
 
 /// Blends between the scene and the blue shifted version
 /// of the scene for a cinematic desaturated night effect.
-$HDRPostFX::enableBlueShift = 0.0;
+$HDRFx::enableBlueShift = 0.0;
 
 /// The blue shift color value.
-$HDRPostFX::blueShiftColor = "1.05 0.97 1.27";
+$HDRFx::blueShiftColor = "1.05 0.97 1.27";
 
 
 /// Blends between the scene and the bloomed scene.
-$HDRPostFX::enableBloom = 1.0;
+$HDRFx::enableBloom = 1.0;
 
 /// The threshold luminace value for pixels which are
 /// considered "bright" and need to be bloomed.
-$HDRPostFX::brightPassThreshold = 1.0;
+$HDRFx::brightPassThreshold = 1.0;
 
 /// These are used in the gaussian blur of the
 /// bright pass for the bloom effect.
-$HDRPostFX::gaussMultiplier = 0.3;
-$HDRPostFX::gaussMean = 0.0;
-$HDRPostFX::gaussStdDev = 0.8;
+$HDRFx::gaussMultiplier = 0.3;
+$HDRFx::gaussMean = 0.0;
+$HDRFx::gaussStdDev = 0.8;
 
 /// The 1x255 color correction ramp texture used
 /// by both the HDR shader and the GammaPostFx shader
 /// for doing full screen color correction. 
-$HDRPostFX::colorCorrectionRamp = "sys/postFx/null_color_ramp.png";
+$HDRFx::colorCorrectionRamp = "sys/postFx/null_color_ramp.png";
 
 
 singleton ShaderData( HDR_BrightPassShader )
@@ -175,22 +175,22 @@ singleton GFXStateBlockData( HDRStateBlock )
 };
 
 
-function HDRPostFX::setShaderConsts( %this )
+function HDRFx::setShaderConsts( %this )
 {
-   %this.setShaderConst( "$brightPassThreshold", $HDRPostFX::brightPassThreshold );
-   %this.setShaderConst( "$g_fMiddleGray", $HDRPostFX::keyValue );   
+   %this.setShaderConst( "$brightPassThreshold", $HDRFx::brightPassThreshold );
+   %this.setShaderConst( "$g_fMiddleGray", $HDRFx::keyValue );   
          
    %bloomH = %this-->bloomH;
-   %bloomH.setShaderConst( "$gaussMultiplier", $HDRPostFX::gaussMultiplier );
-   %bloomH.setShaderConst( "$gaussMean", $HDRPostFX::gaussMean );
-   %bloomH.setShaderConst( "$gaussStdDev", $HDRPostFX::gaussStdDev );   
+   %bloomH.setShaderConst( "$gaussMultiplier", $HDRFx::gaussMultiplier );
+   %bloomH.setShaderConst( "$gaussMean", $HDRFx::gaussMean );
+   %bloomH.setShaderConst( "$gaussStdDev", $HDRFx::gaussStdDev );   
 
    %bloomV = %this-->bloomV;
-   %bloomV.setShaderConst( "$gaussMultiplier", $HDRPostFX::gaussMultiplier );
-   %bloomV.setShaderConst( "$gaussMean", $HDRPostFX::gaussMean );
-   %bloomV.setShaderConst( "$gaussStdDev", $HDRPostFX::gaussStdDev );   
+   %bloomV.setShaderConst( "$gaussMultiplier", $HDRFx::gaussMultiplier );
+   %bloomV.setShaderConst( "$gaussMean", $HDRFx::gaussMean );
+   %bloomV.setShaderConst( "$gaussStdDev", $HDRFx::gaussStdDev );   
 
-   %minLuminace = $HDRPostFX::minLuminace;
+   %minLuminace = $HDRFx::minLuminace;
    if ( %minLuminace <= 0.0 )
    {
       // The min should never be pure zero else the
@@ -199,32 +199,32 @@ function HDRPostFX::setShaderConsts( %this )
    }
    %this-->adaptLum.setShaderConst( "$g_fMinLuminace", %minLuminace );
         
-   %this-->finalLum.setShaderConst( "$adaptRate", $HDRPostFX::adaptRate );
+   %this-->finalLum.setShaderConst( "$adaptRate", $HDRFx::adaptRate );
    
    %combinePass = %this-->combinePass;   
-   %combinePass.setShaderConst( "$g_fEnableToneMapping", $HDRPostFX::enableToneMapping );
-   %combinePass.setShaderConst( "$g_fMiddleGray", $HDRPostFX::keyValue );
-   %combinePass.setShaderConst( "$g_fBloomScale", $HDRPostFX::enableBloom );      
-   %combinePass.setShaderConst( "$g_fEnableBlueShift", $HDRPostFX::enableBlueShift );   
-   %combinePass.setShaderConst( "$g_fBlueShiftColor", $HDRPostFX::blueShiftColor );   
+   %combinePass.setShaderConst( "$g_fEnableToneMapping", $HDRFx::enableToneMapping );
+   %combinePass.setShaderConst( "$g_fMiddleGray", $HDRFx::keyValue );
+   %combinePass.setShaderConst( "$g_fBloomScale", $HDRFx::enableBloom );      
+   %combinePass.setShaderConst( "$g_fEnableBlueShift", $HDRFx::enableBlueShift );   
+   %combinePass.setShaderConst( "$g_fBlueShiftColor", $HDRFx::blueShiftColor );   
    
    %clampedGamma  = mClamp( $pref::Video::Gamma, 0.001, 2.2);
    %combinePass.setShaderConst( "$g_fOneOverGamma",  1 / %clampedGamma );       
 
-   %whiteCutoff = ( $HDRPostFX::whiteCutoff * $HDRPostFX::whiteCutoff ) *
-                  ( $HDRPostFX::whiteCutoff * $HDRPostFX::whiteCutoff );                  
+   %whiteCutoff = ( $HDRFx::whiteCutoff * $HDRFx::whiteCutoff ) *
+                  ( $HDRFx::whiteCutoff * $HDRFx::whiteCutoff );                  
    %combinePass.setShaderConst( "$g_fWhiteCutoff", %whiteCutoff );
 }
 
-function HDRPostFX::preProcess( %this )
+function HDRFx::preProcess( %this )
 {
    %combinePass = %this-->combinePass;
    
-   if ( %combinePass.texture[3] !$= $HDRPostFX::colorCorrectionRamp )
-      %combinePass.setTexture( 3, $HDRPostFX::colorCorrectionRamp );         
+   if ( %combinePass.texture[3] !$= $HDRFx::colorCorrectionRamp )
+      %combinePass.setTexture( 3, $HDRFx::colorCorrectionRamp );         
 }
 
-function HDRPostFX::onEnabled( %this )
+function HDRFx::onEnabled( %this )
 {
    // We don't allow hdr on OSX yet.
    if ( $platform $= "macos" )
@@ -240,7 +240,7 @@ function HDRPostFX::onEnabled( %this )
    
    // HDR does it's own gamma calculation so 
    // disable this postFx.
-   GammaPostFX.disable();
+   GammaFx.disable();
    
    // Set the right global shader define for HDR.
    if ( %format $= "GFXFormatR10G10B10A2" )
@@ -263,10 +263,10 @@ function HDRPostFX::onEnabled( %this )
    return true;
 }
 
-function HDRPostFX::onDisabled( %this )
+function HDRFx::onDisabled( %this )
 {
-   // Enable a special GammaCorrection PostFX when this is disabled.
-   GammaPostFX.enable();
+   // Enable a special GammaCorrection Fx when this is disabled.
+   GammaFx.enable();
    
    // Restore the non-HDR offscreen surface format.
    %format = "GFXFormatR8G8B8A8";
@@ -281,7 +281,7 @@ function HDRPostFX::onDisabled( %this )
    resetLightManager();
 }
 
-singleton PostEffect( HDRPostFX )
+singleton PostEffect( HDRFx )
 {
    isEnabled = false;
    allowReflectPass = false;
@@ -412,7 +412,7 @@ singleton PostEffect( HDRPostFX )
       texture[0] = "$backBuffer";
       texture[1] = "#adaptedLum";            
       texture[2] = "#bloomFinal";
-      texture[3] = $HDRPostFX::colorCorrectionRamp;
+      texture[3] = $HDRFx::colorCorrectionRamp;
       target = "$backBuffer";
    };
 };
@@ -430,12 +430,12 @@ singleton GFXStateBlockData( LuminanceVisStateBlock : PFX_DefaultStateBlock )
    samplerStates[0] = SamplerClampLinear;   
 };
 
-function LuminanceVisPostFX::setShaderConsts( %this )
+function LuminanceVisFx::setShaderConsts( %this )
 {
-   %this.setShaderConst( "$brightPassThreshold", $HDRPostFX::brightPassThreshold );
+   %this.setShaderConst( "$brightPassThreshold", $HDRFx::brightPassThreshold );
 }
 
-singleton PostEffect( LuminanceVisPostFX )
+singleton PostEffect( LuminanceVisFx )
 {
    isEnabled = false;
    allowReflectPass = false;
@@ -453,20 +453,20 @@ singleton PostEffect( LuminanceVisPostFX )
    //targetFormat = "GFXFormatR16F";
 };
 
-function LuminanceVisPostFX::onEnabled( %this )
+function LuminanceVisFx::onEnabled( %this )
 {
-   if ( !HDRPostFX.isEnabled() )
+   if ( !HDRFx.isEnabled() )
    {
-      HDRPostFX.enable();
+      HDRFx.enable();
    }
    
-   HDRPostFX.skip = true;
+   HDRFx.skip = true;
    
    return true;
 }
 
-function LuminanceVisPostFX::onDisabled( %this )
+function LuminanceVisFx::onDisabled( %this )
 {      
-   HDRPostFX.skip = false; 
+   HDRFx.skip = false; 
 }
 
