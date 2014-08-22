@@ -23,7 +23,9 @@
 function createCanvas(%windowTitle)
 {
    // Create the Canvas
-   new GuiCanvas(Canvas);
+   new GuiCanvas(Canvas) {
+      showWindow = false;
+   };
 
    // Set the window title
    if (isObject(Canvas)) {
