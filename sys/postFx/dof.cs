@@ -26,6 +26,9 @@
  The DOFFx API
 ================================================================================
 
+Note that DOFFx requires ServerConnection to exist. It operates on
+ServerConnection.getCameraObject().
+
 DOFFx::setFocalDist( %dist )
 
 @summary
@@ -400,61 +403,51 @@ singleton PostEffect( DOFFx )
    targetScale = "0.25 0.25";   
    
    isEnabled = false;
+
+   singleton PostEffect()
+   {
+      shader = PFX_DOFBlurYShader;
+      stateBlock = PFX_DOFBlurStateBlock;
+      texture[0] = "#shrunk";
+      target = "$outTex";
+   };
+
+   singleton PostEffect()
+   {
+      shader = PFX_DOFBlurXShader;
+      stateBlock = PFX_DOFBlurStateBlock;
+      texture[0] = "$inTex";
+      target = "#largeBlur";
+   };
+
+   singleton PostEffect()
+   {
+      shader = PFX_DOFCalcCoCShader;
+      stateBlock = PFX_DOFCalcCoCStateBlock;
+      texture[0] = "#shrunk";
+      texture[1] = "#largeBlur";
+      target = "$outTex";
+   };
+
+   singleton PostEffect()
+   {
+      shader = PFX_DOFSmallBlurShader;
+      stateBlock = PFX_DefaultDOFStateBlock;
+      texture[0] = "$inTex";
+      target = "$outTex";
+   };
+
+   singleton PostEffect()
+   {
+      shader = PFX_DOFFinalShader;
+      stateBlock = PFX_DOFFinalStateBlock;
+      texture[0] = "$backBuffer";
+      texture[1] = "$inTex";
+      texture[2] = "#largeBlur";
+      texture[3] = "#prepass";
+      target = "$backBuffer";
+   };
 };
-
-singleton PostEffect( DOFBlurY )
-{
-   shader = PFX_DOFBlurYShader;
-   stateBlock = PFX_DOFBlurStateBlock;
-   texture[0] = "#shrunk";
-   target = "$outTex";
-};
-
-DOFFx.add( DOFBlurY );
-
-singleton PostEffect( DOFBlurX )
-{
-   shader = PFX_DOFBlurXShader;
-   stateBlock = PFX_DOFBlurStateBlock;
-   texture[0] = "$inTex";  
-   target = "#largeBlur";
-};
-
-DOFFx.add( DOFBlurX );
-
-singleton PostEffect( DOFCalcCoC )
-{
-   shader = PFX_DOFCalcCoCShader;
-   stateBlock = PFX_DOFCalcCoCStateBlock;
-   texture[0] = "#shrunk";
-   texture[1] = "#largeBlur";
-   target = "$outTex";
-};
-
-DOFFx.add( DOFCalcCoc );
-  
-singleton PostEffect( DOFSmallBlur )
-{
-   shader = PFX_DOFSmallBlurShader;
-   stateBlock = PFX_DefaultDOFStateBlock;
-   texture[0] = "$inTex";
-   target = "$outTex";
-};
-
-DOFFx.add( DOFSmallBlur );
-   
-singleton PostEffect( DOFFinalPFX )
-{
-   shader = PFX_DOFFinalShader;
-   stateBlock = PFX_DOFFinalStateBlock;
-   texture[0] = "$backBuffer";
-   texture[1] = "$inTex";
-   texture[2] = "#largeBlur";   
-   texture[3] = "#prepass";   
-   target = "$backBuffer";
-};
-
-DOFFx.add( DOFFinalPFX );
 
 
 //-----------------------------------------------------------------------------
