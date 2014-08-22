@@ -45,7 +45,7 @@ function GameConnection::onConnect(%this) {
 }
 
 // Called when all datablocks from above have been transmitted.
-function GameConnection::onDataBlocksDone(%client) {
+function GameConnection::onDataBlocksDone(%this) {
    closeSplashWindow();
    Canvas.showWindow();
 
