@@ -114,26 +114,34 @@ So what do these parameters refer to?
 `%this` refers to the datablock, `Gun`.
 `%obj` refers to the object that the image is currently mounted to - in this case, our player!
 
+There are two important methods to note here: `getMuzzlePoint` and `getMuzzleVector`.
+They're both called on `%obj` - the player whom the weapon image is mounted to.
+`ShapeBase` provides these two methods which allow you to get the position and direction of an image's muzzle point.
+The parameter (`0` in both cases) is the image slot to query - we use `0` since we mounted `Gun` to slot `0` earlier using `mountImage(Gun, 0)`.
+These methods allow you to specify the muzzle point within an image's shape file by adding a node named `muzzlePoint`.
+
+Setting a `Projectile`'s `sourceObject` tells it to ignore collision with a certain object, which in this case is the player.
+In case the bullet is created inside the player's bounding box - we don't want them shooting themselves!
+
 So, this little script creates a new `Projectile`, adds it to `GameGroup`, and defines some properties.
 This is a bare-minimum projectile definition.
 The datablock lets the `Projectile` access properties like which shape file to use, and the initial position and velocity tell it where to start, and where to go.
-
-Nearly there!
-Now your gun will nearly be functional - but at the moment, Torque isn't listening for mouse clicks.
+We're nearly there!
+Now your gun will almost be functional - but at the moment, Torque isn't listening for mouse clicks.
 
 ### Registering clicks
 
-Remember in [fly_camera](../fly_camera) how we used an `ActionMap` to capture keyboard actions, which the `MoveManager` then sent to the server to be enacted on our control object?
-We're going to do the same thing here.
-Torque uses 'triggers' for actions like mouse clicks (and, like in [fps_player](../fps_player), jumping), so this will look familiar:
+Remember that in [fly_camera](../fly_camera) we used an `ActionMap` to capture keyboard actions, which the `MoveManager` then sent to the server to be enacted on our control object?
+For movement we used `$mvForwardAction` and friends.
+Torque uses 'triggers' for actions like mouse clicks (and, like in [fps_player](../fps_player), jumping):
 
     MoveMap.bindCmd("mouse", "button0", "$mvTriggerCount0++;", "$mvTriggerCount0++;");
 
 That's asking Torque to increment `$mvTriggerCount0` every time we press or release the mouse.
-It just so happens that trigger `0` is wired into mounted image triggers (this happens in source code), so when we press the mouse, our image's state machine will receive a 'trigger' input.
+It just so happens that trigger `0` is wired into mounted image triggers (this happens inside the engine source code), so when we press the mouse, our image's state machine will receive a 'trigger' input.
 That causes transitions to happen in the state machine we defined above.
 
-So now you can run your level, and you should be able to shoot little green cubes!
+So now you can run your level, and you should be able to shoot some little green cubes!
 
 ## Oh, you want collisions?
 
@@ -148,6 +156,7 @@ In a later tutorial we'll look at adding explosions and all sorts of fun stuff, 
 
 This will print the class name of the object the `Projectile` collides with in the console in red.
 Not very exciting, I know, but handling damage or anything more exciting is a bit beyond the scope of this tutorial!
+Fun fact: `onCollision` may be called multiple times if your projectile can bounce or ricochet.
 
 ## Taking it further
 
