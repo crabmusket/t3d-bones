@@ -94,6 +94,9 @@ function onStart() {
       };
    };
 
+   // Allow us to exit the game...
+   GlobalActionMap.bind("keyboard", "escape", "quit");
+
    new ActionMap(MoveMap);
 
    // Movement binds.
@@ -122,7 +125,6 @@ function pitch(%amount) {
 
 //-----------------------------------------------------------------------------
 function onEnd() {
-   ServerConnection.delete();
    GameGroup.delete();
    MoveMap.delete();
 }

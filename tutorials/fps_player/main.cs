@@ -50,6 +50,9 @@ function onStart() {
       };
    };
 
+   // Allow us to exit the game...
+   GlobalActionMap.bind("keyboard", "escape", "quit");
+
    new ActionMap(MoveMap);
    MoveMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
    MoveMap.bindCmd("keyboard", "s", "$mvBackwardAction = 1;", "$mvBackwardAction = 0;");
@@ -72,7 +75,6 @@ function pitch(%amount) {
 
 //-----------------------------------------------------------------------------
 function onEnd() {
-   ServerConnection.delete();
    GameGroup.delete();
    MoveMap.delete();
 }

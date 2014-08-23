@@ -106,16 +106,19 @@ function onStart() {
                 SPC 2 * %i + 5;
       });
    }
+
+   // Allow us to exit the game...
+   GlobalActionMap.bind("keyboard", "escape", "quit");
 }
 
 //-----------------------------------------------------------------------------
 function onEnd() {
    physicsStopSimulation("client");
-   ServerConnection.delete();
    physicsDestroyWorld("client");
 
-   physicsStopSimulation("server");
    GameGroup.delete();
+
+   physicsStopSimulation("server");
    physicsDestroyWorld("server");
 
    physicsDestroy();

@@ -63,6 +63,9 @@ function onStart() {
       }
    }
 
+   // Allow us to exit the game...
+   GlobalActionMap.bind("keyboard", "escape", "quit");
+
    // Camera movement binds.
    new ActionMap(MoveMap);
    MoveMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
@@ -82,7 +85,6 @@ function onGhostAlwaysObjectReceived() {}
 //-----------------------------------------------------------------------------
 // Called when the engine is shutting down.
 function onEnd() {
-   ServerConnection.delete();
    // Delete the objects we created.
    GameGroup.delete();
 }

@@ -60,15 +60,15 @@ new GameConnection(ServerConnection);
 // This calls GameConnection::onConnect.
 ServerConnection.connectLocal();
 
-// Allow us to exit the game...
-GlobalActionMap.bind("keyboard", "escape", "quit");
-
 // Start game-specific scripts.
 onStart();
 
 //-----------------------------------------------------------------------------
 // Called when the engine is shutting down.
 function onExit() {
+   // Clean up ghosts.
+   ServerConnection.delete();
+
    // Clean up game objects and so on.
    onEnd();
 
