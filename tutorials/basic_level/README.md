@@ -140,12 +140,11 @@ So if you want to call it something else, you know where to look!
 Given all the objects we created  in `onStart`, let's have a look at an `onEnd` function that might be suitable:
 
     function onEnd() {
-        ServerConnection.delete();
         GameObjects.delete();
     }
 
 `SimGroup` is a special container class, sort of like a folder in a computer.
-When you delete it, all the objects inside itare deleted, too - so we don't have to delete them all one by one!
+When you delete it, all the objects inside it are deleted, too - so we don't have to delete them all one by one!
 
 Right, now you should be able to run the game and close it without any crashing!
 
