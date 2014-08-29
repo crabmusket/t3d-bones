@@ -12,7 +12,7 @@
 
  * Using EventManagers
  * State machine AI
- * Force-field obstacle avoidance
+ * Vector field obstacle avoidance
 
 ### Scripting
 
@@ -20,3 +20,8 @@
  * Counter UI
  * Health and energy UIs
  * Using Python instead of TS
+
+### Networking
+
+ * Hosting and connecting to LAN games
+ * Downloading content from the server
