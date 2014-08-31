@@ -20,6 +20,7 @@ Therefore:
 
 ## Projects using t3d-bones
 
+ * [Beyond Reality](https://github.com/JeffProgrammer/BeyondReality): an open-source marble game
  * [NessieSim 2014](https://github.com/eightyeight/nessiesim14): a Monster Mash 2014 jam entry
  * [vlrtt](https://github.com/eightyeight/vlrtt): a real-time tactics game with vim-like controls
  * [sspt](https://github.com/lukaspj/sspt): a side-scroller prototype
