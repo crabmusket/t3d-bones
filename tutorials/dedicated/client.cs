@@ -3,9 +3,14 @@
 exec("./playGui.gui");
 
 //-----------------------------------------------------------------------------
+// And a material to give the ground some colour (even if it's just white).
+singleton Material(BlankWhite) {
+   diffuseColor[0] = "White";
+};
+
+//-----------------------------------------------------------------------------
 // Called when all datablocks have been transmitted.
 function GameConnection::initialControlSet(%this) {
-   echo("hi!");
    closeSplashWindow();
    Canvas.showWindow();
 

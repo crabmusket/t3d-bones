@@ -3,19 +3,12 @@
 datablock CameraData(Observer) {};
 
 //-----------------------------------------------------------------------------
-// And a material to give the ground some colour (even if it's just white).
-singleton Material(BlankWhite) {
-   diffuseColor[0] = "White";
-};
-
-//-----------------------------------------------------------------------------
 // Called when all datablocks have been transmitted.
 function GameConnection::onEnterGame(%this) {
    // Create a camera for the client.
    new Camera(TheCamera) {
       datablock = Observer;
    };
-   return;
    TheCamera.setTransform("0 0 2 1 0 0 0");
    // Cameras are not ghosted (sent across the network) by default; we need to
    // do it manually for the client that owns the camera or things will go south

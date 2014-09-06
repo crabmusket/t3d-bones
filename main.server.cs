@@ -1,9 +1,9 @@
 // Open a console window since we won't have a canvas.
 enableWinConsole(true);
-setLogMode(2);
+setLogMode(1);
 
-// Script trace.
-trace(true);
+// Create a null GFX device since we don't render anything in a dedicated server.
+GFXInit::createNullDevice();
 
 // Load up game code.
 exec("tutorials/dedicated/config.cs");
