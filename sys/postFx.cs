@@ -43,28 +43,6 @@ singleton ShaderData( PFX_PassthruShader )
    pixVersion = 2.0;
 };
 
-function initPostEffects()
-{
-   echo("\nInitializing PostFX Scripts");
-   // First exec the scripts for the different light managers
-   // in the lighting folder.
-   
-   %pattern = "./postFx/*.cs";   
-   %file = findFirstFile( %pattern );
-   if ( %file $= "" )
-   {
-      // Try for DSOs next.
-      %pattern = "./postFx/*.cs.dso";
-      %file = findFirstFile( %pattern );
-   }
-   
-   while( %file !$= "" )
-   {      
-      exec( %file );
-      %file = findNextFile( %pattern );
-   }
-}
-
 function PostEffect::inspectVars( %this )
 {
    %name = %this.getName(); 

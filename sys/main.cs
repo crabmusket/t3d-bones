@@ -46,6 +46,9 @@ exec("./globals.cs");
 exec("./canvas.cs");
 exec("./cursor.cs");
 
+// PostFX defaults and utilities.
+exec("./postFx.cs");
+
 exec("./renderManager.cs");
 exec("./lighting.cs");
 
@@ -58,6 +61,3 @@ exec("./gfxData/terrainBlock.cs");
 exec("./gfxData/water.cs");
 exec("./gfxData/scatterSky.cs");
 exec("./gfxData/clouds.cs");
-
-// Initialize all core post effects.   
-exec("./postFx.cs");
