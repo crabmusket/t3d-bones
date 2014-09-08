@@ -19,9 +19,6 @@ createCanvas("T3Dbones");
 initRenderManager();
 initLightingSystems("Basic Lighting"); 
 
-// Start PostFX. If you use "Advanced Lighting" above, uncomment this.
-//initPostEffects();
-
 // Start audio.
 sfxStartup();
 
@@ -34,7 +31,7 @@ function updateTSShapeLoadProgress() {}
 
 //-----------------------------------------------------------------------------
 // Load console.
-exec("console/main.cs");
+exec("lib/console/main.cs");
 
 // Load up game code.
 exec("game/main.cs");

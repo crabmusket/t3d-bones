@@ -13,7 +13,7 @@ The template has been structured as little as possible, but I found that moving 
 Therefore:
 
  * `main.cs` handles engine initialisation, loads up the console, and finally the base game.
- * All the console scripts and GUIs are defined in `console/`.
+ * `lib/` contains script libraries. At this moment, all it contains is the console GUI, and the stock post-effects.
  * All game-related info (i.e. object creation) is defined in `game/`, which is also where the art lives.
  * System initialisation (i.e. graphics and sound) lives in `sys/`. Don't go in there. It's terrifying.
  * Each folder in `tutorials/` is like a custom `game/` folder specific to some learning goal.
