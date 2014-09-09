@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure('2') do |config|
+  config.vm.provision :shell, path: 'provision.sh'
+  config.vm.network 'forwarded_port', guest: 28000, host: 28000
+
+  # Local machine will use VirtualBox to run a headless VM.
+  config.vm.define 'local', primary: true do |config|
+    config.vm.box = 'ubuntu/precise32'
+
+    config.vm.provider :virtualbox do |config|
+      config.name = 't3d-bones-server'
+      config.memory = 1024
+    end
+  end
+
+  # Remote machine is used for deployment!
+  config.vm.define 'cloud', autostart: false do |config|
+    config.vm.box = 'digital_ocean'
+    config.ssh.private_key_path = '~/.ssh/id_rsa'
+
+    config.vm.provider :digital_ocean do |config, override|
+      config.token = ENV.fetch('DIGITAL_OCEAN_TOKEN')
+      config.image = 'Ubuntu 12.04.5 x32'
+      config.region = 'sgp1'
+      config.size = '512mb'
+    end
+  end
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder '../data', '/vagrant_data'
+end
