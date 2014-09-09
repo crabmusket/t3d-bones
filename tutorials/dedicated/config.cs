@@ -1,2 +1,4 @@
 $server::host = "localhost";
-$server::port = 8001;
+$server::port = 28000;
+$client::portMin = 8001;
+$client::portMax = 8999;

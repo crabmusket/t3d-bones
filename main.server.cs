@@ -1,39 +1,42 @@
-// Open a console window since we won't have a canvas.
+// Open a console window and create a null GFX device since we won't be
+// rendering a usual game vanvas.
 enableWinConsole(true);
-setLogMode(1);
-
-// Create a null GFX device since we don't render anything in a dedicated server.
 GFXInit::createNullDevice();
+
+// This function is called on the server when a client on another machine
+// requests to connect to our game. Return "" to accept the connection, or
+// anything else to reject it.
+function GameConnection::onConnectRequest(%this, %addr) {
+   return "";
+}
+
+// Called when a client is allowed to connect to the game. We start transmitting
+// currently loaded datablocks to the client.
+function GameConnection::onConnect(%this) {
+   %this.transmitDataBlocks(0);
+}
+
+// Called when all datablocks have been transmitted. At this point we can start
+// ghosting objects to the client, and perform server-side setup for them.
+function GameConnection::onDataBlocksDone(%this) {
+   %this.activateGhosting();
+   %this.onEnterGame();
+}
+
+// When the client drops from the game, we clean up after them.
+function GameConnection::onDrop(%this, %reason) {
+   %this.onLeaveGame();
+}
 
 // Load up game code.
 exec("tutorials/dedicated/config.cs");
 exec("tutorials/dedicated/server.cs");
 
-function GameConnection::onConnectRequest(%this, %addr, %name) {
-   return "";
-}
-
-// Called when we connect to the local game.
-function GameConnection::onConnect(%this) {
-   %this.transmitDataBlocks(0);
-}
-
-// Called when all datablocks from above have been transmitted.
-function GameConnection::onDataBlocksDone(%this) {
-   // Start sending ghosts to the client.
-   %this.activateGhosting();
-   %this.onEnterGame();
-}
-
-function GameConnection::onDrop(%this, %reason) {
-   %this.onLeaveGame();
-}
-
 // Create a local game server and connect to it.
 new SimGroup(ServerGroup);
 
 // Start game-specific scripts.
-setNetPort(28000);
+setNetPort($server::port);
 allowConnections(true);
 onStart();
 

@@ -2,12 +2,6 @@
 // engine is initialized and main window created
 displaySplashWindow("splash.bmp");
 
-// Console does something.
-setLogMode(2);
-// Disable script trace.
-trace(false);
-
-//-----------------------------------------------------------------------------
 // Load up scripts to initialise subsystems.
 exec("sys/main.cs");
 
@@ -19,9 +13,6 @@ createCanvas("T3Dbones dedicated client");
 initRenderManager();
 initLightingSystems("Advanced Lighting");
 
-// Start PostFX. If you use "Advanced Lighting" above, uncomment this.
-initPostEffects();
-
 // Start audio.
 sfxStartup();
 
@@ -29,21 +20,16 @@ sfxStartup();
 // any of these functions, be sure to remove the empty definition here.
 function onDatablockObjectReceived() {}
 function onGhostAlwaysObjectReceived() {}
-function onGhostAlwaysObjectsReceived() {echo("ghost always received"); }
+function onGhostAlwaysObjectsReceived() {}
 function onGhostAlwaysStarted() {}
 function updateTSShapeLoadProgress() {}
 
-//-----------------------------------------------------------------------------
 // Load console.
-exec("console/main.cs");
+exec("lib/console/main.cs");
 
 // Load up game code.
 exec("tutorials/dedicated/config.cs");
 exec("tutorials/dedicated/client.cs");
-
-// Called when all datablocks from above have been transmitted.
-function GameConnection::onDataBlocksDone(%this) {
-}
 
 // Allow us to exit the game...
 GlobalActionMap.bind("keyboard", "escape", "quit");
@@ -51,7 +37,6 @@ GlobalActionMap.bind("keyboard", "escape", "quit");
 // Start game-specific scripts.
 onStart();
 
-//-----------------------------------------------------------------------------
 // Called when the engine is shutting down.
 function onExit() {
    // Clean up game objects and so on.
