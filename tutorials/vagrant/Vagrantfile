@@ -3,7 +3,7 @@
 
 Vagrant.configure('2') do |config|
   config.vm.provision :shell, path: 'provision.sh'
-  config.vm.network 'forwarded_port', guest: 28000, host: 28000
+  config.vm.network 'forwarded_port', guest: 28000, host: 28000, protocol: :udp
 
   # Local machine will use VirtualBox to run a headless VM.
   config.vm.define 'local', primary: true do |config|
