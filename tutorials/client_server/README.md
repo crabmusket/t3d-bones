@@ -41,8 +41,7 @@ This tutorial will implement two separate applications, a dedicated server and a
 `t3d-bones` tutorials have generally all followed the same structure - there is a `main.cs` file next to the engine executable, which you edit to execute one of the `tutorials/*/main.cs` files as you wish.
 However, that won't cut it this time.
 This tutorial requires two custom root `main.cs` files to replace the one sitting beside the executable.
-You'll find them in `tutorials/client_server/main.client.cs` and `tutorials/client_server/main.server.cs`.
-For convenience, you should copy/paste them so they're right next to the engine executable (i.e. in the same folder as the `tutorials` folder and the usual `main.cs`).
+You'll find them in [`main.client.cs`](../../main.client.cs) and [`main.server.cs`](../../main.server.cs).
 
 Now that we have files not called `main.cs`, we have to tell the engine how to find them when we run it.
 This often means running the engine from the command-line.
@@ -52,12 +51,13 @@ For example,
 
 will run the server, and using `main.client.cs` instead will run the client.
 
-Left in the `tutorials/client_server/` directory are three script files: `config.cs`, `client.cs`, and `server.cs`.
+In the `tutorials/client_server/` directory (this one) are three script files: [`client.cs`](./client.cs), [`server.cs`](./server.cs), and [`config.cs`](./config.cs).
 We'll see exactly how these are used later, but for now, just know that they're just like our usual `tutorials/*/main.cs` files - they provide code specific to this tutorial, that you wouldn't always want to reuse in other applications.
 
 ## Overview
 
-Before we dive into the code, let's get an overview of the sequence of events between the client and the server:
+Before we dive into the code, let's get an overview of the sequence of events between the client and the serve.
+Later on, we'll see exactly which functions implement each part of that sequence.
 
 ![Sequence of messages between client and server](https://cloud.githubusercontent.com/assets/904269/4244078/27eee11e-3a1a-11e4-9c68-c0f539122e42.png)
 
@@ -76,10 +76,9 @@ Before we dive into the code, let's get an overview of the sequence of events be
 [//]: # (Server-->>Client: ghost updates)
 [//]: # (Note right of Server: etcetera)
 
-Later on, we'll see exactly which functions implement each part of that sequence.
 You may also recognise certain parts of the logic from other `t3d-bones` tutorials: for example, setting the control object and pushing the keybinds.
 In regular `t3d-bones`, those two operations might even take place in the same function call - this is because of the local client/server structure.
-However, in a proper client/server environment running in separate engine instances (or even on separate computers), those two actions are separate and must be performed on the right end of the connection.
+However, in a proper client/server environment running in separate engine instances (or even on separate computers), those two actions are separate and must each be performed on the right end of the connection.
 
 ## The server
 
