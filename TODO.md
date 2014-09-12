@@ -4,13 +4,13 @@
 
 ### Engine classes/features
 
- * Creating ConvexShapes in script
- * Using Triggers
- * Physics
+ * Creating `ConvexShape`s in script
+ * Using `Trigger`s
+ * Making particles
 
 ### AI
 
- * Using EventManagers
+ * Using `EventManager`s
  * State machine AI
  * Vector field obstacle avoidance
 
@@ -19,9 +19,14 @@
  * Selecting objects with the mouse
  * Counter UI
  * Health and energy UIs
- * Using Python instead of TS
 
 ### Networking
 
  * Hosting and connecting to LAN games
  * Downloading content from the server
+
+## Template improvements
+
+ * Move PostFX shaders into `lib/postFX/`
+ * Move specific feature shaders (e.g. terrain) into `lib/` directories
+ * Unified client/server/local scaffold?
