@@ -2,11 +2,6 @@
 // engine is initialized and main window created
 displaySplashWindow("splash.bmp");
 
-// Console does something.
-setLogMode(2);
-// Disable script trace.
-trace(false);
-
 //-----------------------------------------------------------------------------
 // Load up scripts to initialise subsystems.
 exec("sys/main.cs");
