@@ -18,16 +18,6 @@ But hey, why not?
 
     displaySplashWindow("splash.bmp");
 
-Next we'll configure the console and add an opportunity to debug scripts by tracing them.
-I'm really not sure what the console log mode does at this point, but `2` seems like a good value for it.
-The trace function, if called with `true`, will print out whenever you enter or exit a script function.
-It's a bit crazy to trace your entire program - it's more useful around specific function calls you need to debug - but T2D has a hook like this, so I do too.
-
-    setLogMode(2);
-    trace(false);
-
-## Subsystems
-
 The next section of the file is dedicated to Torque's subsystems - rendering, lighting, sound, etc.
 There's a _lot_ of script that goes into this process, and most of it is hidden in the `sys/` directory.
 Fortunately, we only need to call a few of those functions to get a window up and running.
@@ -61,10 +51,9 @@ This is a single function call:
 
 ## Stub methods
 
-At this point, I provide a couple of function stubs (i.e. empty functions).
-They're functions called by the C++ engine code during the loading sequence.
-If we don't define them at all, they print warnings to the console, but we don't want to actually use them -
-so we'll just define them as empty to stop the warnings.
+Some functions are called by the engine's C++ code during engine loading, and expect script-side callbacks to be defined.
+I provide a couple of function stubs (i.e. empty functions) because if we don't define them at all, they print warnings to the console.
+But we don't want to actually use them, so we'll just define them as empty to stop the warnings.
 
     function onDatablockObjectReceived() {}
     function onGhostAlwaysObjectReceived() {}
@@ -73,10 +62,16 @@ so we'll just define them as empty to stop the warnings.
 
 ## The console
 
-At this point, I choose to load up the console scripts and GUIs.
-These are all in their own folder, `console/`, so you can get rid of them completely if you want, and omit the following line:
+At this point, I load up the console scripts and GUIs.
+These are all in their own folder, `lib/console/`, so you can get rid of them completely if you want, by omitting the following line:
 
-    exec("console/main.cs");
+    exec("lib/console/main.cs");
+
+Note that currently, the console library adds a keybind to the `~` key.
+If you want to modify that, you'll have to look at `lib/console/main.cs`.
+
+The `lib/` folder is intended to contain 'libraries' us useful features - such as this console window, or several post-effect shaders that are distributed with the engine's, but which might not be used by everyone who wants to make a game with the engine.
+Later tutorials will introduce the features of the libraries that come with `t3d-bones`.
 
 ## Game scripts
 
@@ -107,16 +102,17 @@ Torque just likes to pretend there is.
 The function starts the datablock transmission to the client.
 This basically copies all the server's datablocks (pieces of static information that specify object properties) to the client.
 Again, over the internet this would actually do something useful - here, since the client and server share the same memory space, it's just a hassle.
-I'm sure there must be some way to bypass this step, but I haven't figured it out yet.
 
-When all the datablocks have been transferred, the client gets the `onDatablocksDone` callback:
+_Note that some people have figured out a way to bypass this step. I haven't yet._
+
+When all the datablocks have been transferred, the 'client' gets the `onDatablocksDone` callback:
 
     function GameConnection::onDataBlocksDone(%client) {
         %client.activateGhosting();
         %client.onEnterGame();
     }
 
-This simply enables ghosting (synchronising objects across a network) and calls the `onEnterGame` function, which should be defined in game-specific scripts.
+This simply enables ghosting (synchronising objects across the network) and calls the `onEnterGame` function, which should be defined in game-specific scripts.
 Now we can actually create the server and connect to it:
 
     new SimGroup(ServerGroup);
@@ -124,22 +120,35 @@ Now we can actually create the server and connect to it:
     ServerConnection.connectLocal();
 
 This `ServerConnection` object is the one receiving all these `GameConnection::` callbacks.
+Calling `connectLocal` is the critical piece that creates a short-circuit local server connection, and starts off the whole local networking shebang with `onConnect` which we defined above.
+Have a look at the [client/server tutorial](../client_server) for a more in-depth look at networking, and how to actually set up clients and servers on separate machines.
+
 Finally, all we need to do is call the startup routine defined by the game scripts:
 
     onStart();
 
 And we're off!
 
-## Engine the game
+## Ending the game
 
 When someone calls the `quit()` function, the engine shuts down.
 It calls the `onExit` function first, though, to give scripts a chance to clean themselves up.
 To reduce the amount of boilerplate code modules need to write, I define the `onExit` function,
 which cleans up the objects created in this file, as well as providing an `onEnd` hook, symmetrical with the call to `onStart` when the game first starts.
 
+The first thing we ned to do `onExit` is delete the `ServerConnection` we created above.
+This object holds all the client-side objects, 'ghosts', which mirror the server-side objects.
+If we don't delete this, these ghosts become orphaned and cause memory leaks.
+
+Then, after the game-specific cleanup defined in`onEnd`, we can clean up all the server-side data structures, which we do by deleting the `ServerGroup` and calling `deleteDataBlocks`.
+
     function onExit() {
+       ServerConnection.delete();
+
+       // Clean up game objects and so on.
        onEnd();
 
+       // Delete server-side objects and datablocks.
        ServerGroup.delete();
        deleteDataBlocks();
     }
