@@ -59,6 +59,7 @@ function onEnd() {
 // And a material to give the ground some colour (even if it's just white).
 singleton Material(BlankWhite) {
    diffuseColor[0] = "White";
+   mapTo = "BlankWhite";
 };
 
 singleton Material(PlayerMaterial) {

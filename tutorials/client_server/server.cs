@@ -7,6 +7,26 @@ datablock PlayerData(BoxPlayer) {
    jumpDelay = 0;
 };
 
+function CubeDAE::onLoad(%this)
+{
+   %this.addSequence("ambient", "rise", 0, 156);
+   %this.setSequenceCyclic("rise", true);
+}
+
+singleton TSShapeConstructor(CubeDAE)
+{
+   baseShape = "./cube.dae";
+   forceUpdateMaterials = false;
+};
+
+datablock StaticShapeData(CubeShape) {
+   shapeFile = "./cube.dae";
+};
+
+function CubeShape::onAdd(%this, %obj) {
+   error(playing SPC %obj.playThread(0, "ambient"));
+}
+
 // Called by the mainfile when a client has connected to the game and is ready
 // to take part!
 function GameConnection::onEnterGame(%this) {
@@ -51,6 +71,10 @@ function onStart() {
          color = "1 1 1";
          ambient = "0.1 0.1 0.1";
          castShadows = true;
+      };
+      new StaticShape(Cube) {
+         datablock = CubeShape;
+         position = "0 5 1";
       };
    };
 }
