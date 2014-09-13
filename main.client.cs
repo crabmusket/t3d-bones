@@ -22,14 +22,13 @@ function onDatablockObjectReceived() {}
 function onGhostAlwaysObjectReceived() {}
 function onGhostAlwaysObjectsReceived() {}
 function onGhostAlwaysStarted() {}
-function updateTSShapeLoadProgress() {}
 
 // Load console.
 exec("lib/console/main.cs");
 
 // Load up game code.
-exec("tutorials/dedicated/config.cs");
-exec("tutorials/dedicated/client.cs");
+exec("tutorials/client_server/config.cs");
+exec("tutorials/client_server/client.cs");
 
 // Allow us to exit the game...
 GlobalActionMap.bind("keyboard", "escape", "quit");
