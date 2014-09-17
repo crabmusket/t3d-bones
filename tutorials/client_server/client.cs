@@ -28,6 +28,7 @@ function GameConnection::initialControlSet(%this) {
    PlayGui.noCursor = true;
    Canvas.setContent(PlayGui);
    activateDirectInput();
+   toggleNetGraph();
 
    new ActionMap(MoveMap);
    MoveMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");

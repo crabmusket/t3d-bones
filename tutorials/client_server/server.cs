@@ -12,7 +12,7 @@ datablock StaticShapeData(CubeShape) {
 };
 
 function CubeShape::onAdd(%this, %obj) {
-   error(playing SPC %obj.playThread(0, "rise"));
+   //error(playing SPC %obj.playThread(0, "rise"));
 }
 
 // Called by the mainfile when a client has connected to the game and is ready
@@ -48,6 +48,7 @@ function onStart() {
    new SimGroup(GameGroup) {
       new LevelInfo(TheLevelInfo) {
          canvasClearColor = "0 0 0";
+         visibleDistance = 10;
       };
       new GroundPlane(TheGround) {
          position = "0 0 0";
@@ -62,7 +63,7 @@ function onStart() {
       };
       new StaticShape(Cube) {
          datablock = CubeShape;
-         position = "0 5 1";
+         position = "0 20 1";
       };
    };
 }
