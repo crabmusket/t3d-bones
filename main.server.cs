@@ -28,11 +28,11 @@ function GameConnection::onDrop(%this, %reason) {
    %this.onLeaveGame();
 }
 
+function updateTSShapeLoadProgress() {}
+
 // Load up game code.
 exec("tutorials/client_server/config.cs");
 exec("tutorials/client_server/server.cs");
-
-function updateTSShapeLoadProgress() {}
 
 // Create a local game server and connect to it.
 new SimGroup(ServerGroup);

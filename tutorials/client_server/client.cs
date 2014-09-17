@@ -1,3 +1,5 @@
+exec("lib/metrics/main.cs");
+
 // Don't slow down when the window is unfocused.
 $platform::backgroundSleepTime = 0;
 
@@ -23,6 +25,7 @@ function GameConnection::initialControlSet(%this) {
    // Activate HUD which allows us to see the game. This should technically be
    // a commandToClient, but since the client and server are on the same
    // machine...
+   PlayGui.noCursor = true;
    Canvas.setContent(PlayGui);
    activateDirectInput();
 
@@ -36,6 +39,14 @@ function GameConnection::initialControlSet(%this) {
    MoveMap.bind("mouse", "xaxis", "yaw");
    MoveMap.bind("mouse", "yaxis", "pitch");
    MoveMap.push();
+}
+
+function yaw(%amount) {
+   $mvYaw += %amount * 0.01;
+}
+
+function pitch(%amount) {
+   $mvPitch += %amount * 0.01;
 }
 
 // Called when our request to join a server is accepted.
