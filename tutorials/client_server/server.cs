@@ -61,11 +61,48 @@ function onStart() {
          ambient = "0.1 0.1 0.1";
          castShadows = true;
       };
-      new StaticShape(Cube) {
-         datablock = CubeShape;
-         position = "0 20 1";
+      new SimGroup(Cubes) {
+         new StaticShape(Cube) {
+            datablock = CubeShape;
+            position = "0 20 1";
+         };
+         new StaticShape(Cube2) {
+            datablock = CubeShape;
+            position = "0 40 1";
+         };
+         new StaticShape(Cube3) {
+            datablock = CubeShape;
+            position = "0 60 1";
+         };
+         new StaticShape(Cube4) {
+            datablock = CubeShape;
+            position = "0 80 1";
+         };
       };
    };
+
+   Cubes.refresh(1000, 2);
+}
+
+function SimSet::refresh(%this, %period, %objectsPerIteration) {
+   %this._refresh = %this.schedule(%period, refresh, %period, %objectsPerIteration);
+
+   if(%this._refreshIndex $= "") {
+      %this._refreshIndex = 0;
+   }
+
+   %i = %this._refreshIndex;
+   %max = %this.getCount()-1;
+   for(%j = 0; %j < %objectsPerIteration; %j++) {
+      if(%i > %max) {
+         %i = 0;
+      }
+      %obj = %this.getObject(%i);
+      %obj.position = %obj.position;
+      %i++;
+   }
+
+   %this._refreshIndex = %i;
 }
 
 // Called when the engine is shutting down.
