@@ -8,9 +8,11 @@ Vagrant.configure('2') do |config|
   # Local machine will use VirtualBox to run a headless VM.
   config.vm.define 'local', primary: true do |config|
     config.vm.box = 'ubuntu/precise32'
+    config.vm.provision :shell, path: 'provision-compiler.sh'
 
     config.vm.provider :virtualbox do |config|
       config.name = 't3d-bones-server'
+      # Need more than default 512MB for compilation.
       config.memory = 1024
     end
   end
@@ -19,6 +21,8 @@ Vagrant.configure('2') do |config|
   config.vm.define 'cloud', autostart: false do |config|
     config.vm.box = 'digital_ocean'
     config.ssh.private_key_path = '~/.ssh/id_rsa'
+    # Disable default folder sync to sync manually.
+    #config.vm.synced_folder '.', '/vagrant', disabled: true
 
     config.vm.provider :digital_ocean do |config, override|
       config.token = ENV.fetch('DIGITAL_OCEAN_TOKEN')
