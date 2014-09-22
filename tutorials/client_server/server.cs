@@ -48,7 +48,7 @@ function onStart() {
    new SimGroup(GameGroup) {
       new LevelInfo(TheLevelInfo) {
          canvasClearColor = "0 0 0";
-         visibleDistance = 10;
+         visibleDistance = 20;
       };
       new GroundPlane(TheGround) {
          position = "0 0 0";
@@ -79,9 +79,30 @@ function onStart() {
             position = "0 80 1";
          };
       };
+      new AIPlayer() {
+         position = "0 20 1";
+         datablock = BoxPlayer;
+         class = Wanderer;
+      };
    };
 
    Cubes.refresh(1000, 2);
+}
+
+function PlayerData::onAdd(%this, %obj) {
+   %obj.onAdd();
+}
+
+function Wanderer::onAdd(%this) {
+   %this.wander();
+}
+
+function PlayerData::onReachDestination(%this, %obj) {
+   %obj.wander();
+}
+
+function Wanderer::wander(%this) {
+   %this.setMoveDestination(getRandom(-10, 10) SPC 20 SPC 0);
 }
 
 function SimSet::refresh(%this, %period, %objectsPerIteration) {
