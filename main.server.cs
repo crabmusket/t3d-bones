@@ -1,5 +1,5 @@
 // Open a console window and create a null GFX device since we won't be
-// rendering a usual game vanvas.
+// rendering a usual game canvas.
 enableWinConsole(true);
 GFXInit::createNullDevice();
 

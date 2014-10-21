@@ -52,6 +52,7 @@ function Gun::onFire(%this, %obj) {
       initialPosition = %obj.getMuzzlePoint(0);
       initialVelocity = VectorScale(%obj.getMuzzleVector(0), 5);
       sourceObject = %obj;
+      sourceSlot = 0;
    });
 }
 
