@@ -27,6 +27,7 @@ function SimpleNetServer::stop(%this) {
 }
 
 function SimpleNetServer::destroy(%this) {
+   deleteDatablocks();
    %this.delete();
 }
 

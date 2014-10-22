@@ -24,9 +24,7 @@ function SimpleNetClient::init(%this) {
 function SimpleNetClient::connectTo(%this, %host, %port) {
    %this.connection = new GameConnection();
 
-   // Check for local, NOT localhost. localhost is a valid hostname and may be
-   // used to connect to a dedicated server running on the same computer.
-   if (%host $= local) {
+   if (%host $= self) {
       %this.connection.connectLocal();
    } else {
       setNetPort(%this.port);
