@@ -1,7 +1,34 @@
-// Open a console window and create a null GFX device since we won't be
-// rendering a usual game canvas.
-enableWinConsole(true);
-GFXInit::createNullDevice();
+new ScriptObject(SimpleNetServer) {
+   port = 28001;
+};
+
+function SimpleNetServer::init(%this) {
+   return %this;
+}
+
+function SimpleNetServer::initDedicated(%this) {
+   // Open a console window and create a null GFX device since we won't be
+   // rendering a usual game canvas.
+   enableWinConsole(true);
+   GFXInit::createNullDevice();
+
+   return %this;
+}
+
+function SimpleNetServer::host(%this) {
+   setNetPort(%this.port);
+   allowConnections(true);
+   return %this;
+}
+
+function SimpleNetServer::stop(%this) {
+   allowConnections(false);
+   return %this;
+}
+
+function SimpleNetServer::destroy(%this) {
+   %this.delete();
+}
 
 // This function is called on the server when a client on another machine
 // requests to connect to our game. Return "" to accept the connection, or
@@ -28,29 +55,4 @@ function GameConnection::onDrop(%this, %reason) {
    %this.onLeaveGame();
 }
 
-function updateTSShapeLoadProgress() {}
-
-// Load up game code.
-exec("tutorials/client_server/config.cs");
-exec("tutorials/client_server/server.cs");
-
-// Create a local game server and connect to it.
-new SimGroup(ServerGroup);
-
-// Start game-specific scripts.
-setNetPort($server::port);
-allowConnections(true);
-onStart();
-
-//-----------------------------------------------------------------------------
-// Called when the engine is shutting down.
-function onExit() {
-   allowConnections(false);
-
-   // Clean up game objects and so on.
-   onEnd();
-
-   // Delete server-side objects and datablocks.
-   ServerGroup.delete();
-   deleteDataBlocks();
-}
+//function updateTSShapeLoadProgress() {}

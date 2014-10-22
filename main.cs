@@ -1,75 +1,81 @@
-// Display a splash window immediately to improve app responsiveness before
-// engine is initialized and main window created
 displaySplashWindow("splash.bmp");
 
-// Console does something.
-setLogMode(2);
-// Disable script trace.
-trace(false);
+// Needed for client-side stuff like the GUI.
+exec("lib/simpleNet/client.cs");
+// Needed because we'll be acting as a local server, so we need some server
+// functions defined.
+exec("lib/simpleNet/server.cs");
 
-//-----------------------------------------------------------------------------
-// Load up scripts to initialise subsystems.
-exec("sys/main.cs");
+SimpleNetClient.init();
 
-// The canvas needs to be initialized before any gui scripts are run since
-// some of the controls assume that the canvas exists at load time.
-createCanvas("T3Dbones");
+// Allow us to exit the game...
+GlobalActionMap.bind("keyboard", "escape", "quit");
 
-// Start rendering and stuff.
-initRenderManager();
-initLightingSystems("Basic Lighting"); 
+singleton Material(BlankWhite) {
+   diffuseColor[0] = "White";
+};
 
-// Start audio.
-sfxStartup();
+new SimGroup(GameGroup) {
+   new LevelInfo(TheLevelInfo) {
+      canvasClearColor = "0 0 0";
+   };
+   new GroundPlane(TheGround) {
+      position = "0 0 0";
+      material = BlankWhite;
+   };
+   new Sun(TheSun) {
+      azimuth = 230;
+      elevation = 45;
+      color = "1 1 1";
+      ambient = "0.1 0.1 0.1";
+      castShadows = true;
+   };
+};
 
-// Provide stubs so we don't get console errors. If you actually want to use
-// any of these functions, be sure to remove the empty definition here.
-function onDatablockObjectReceived() {}
-function onGhostAlwaysObjectReceived() {}
-function onGhostAlwaysStarted() {}
-function updateTSShapeLoadProgress() {}
-
-//-----------------------------------------------------------------------------
 // Load console.
 exec("lib/console/main.cs");
 
-// Load up game code.
-exec("game/main.cs");
+// Load HUD.
+exec("tutorials/client_server/playGui.gui");
 
-// Called when we connect to the local game.
-function GameConnection::onConnect(%this) {
-   %this.transmitDataBlocks(0);
+datablock CameraData(Observer) {};
+
+// When a client enters the game, the server assigns them a camera.
+function GameConnection::onEnterGame(%this) {
+   new Camera(TheCamera) {
+      datablock = Observer;
+   };
+   TheCamera.setTransform("0 0 2 1 0 0 0");
+   // Cameras are not ghosted (sent across the network) by default; we need to
+   // do it manually for the client that owns the camera or things will go south
+   // quickly.
+   TheCamera.scopeToClient(%this);
+   // And let the client control the camera.
+   %this.setControlObject(TheCamera);
+   // Add the camera to the group of game objects so that it's cleaned up when
+   // we close the game.
+   GameGroup.add(TheCamera);
 }
 
-// Called when all datablocks from above have been transmitted.
-function GameConnection::onDataBlocksDone(%this) {
+// Called on the client-side when we are first assigned a control object on the
+// server (i.e. our camera).
+function GameConnection::initialControlSet(%this) {
+   // Activate HUD which allows us to see the game.
+   Canvas.setContent(PlayGui);
+   activateDirectInput();
+
+   // Replace the splash screen with the main game window.
    closeSplashWindow();
    Canvas.showWindow();
-
-   // Start sending ghosts to the client.
-   %this.activateGhosting();
-   %this.onEnterGame();
 }
 
-// Create a local game server and connect to it.
-new SimGroup(ServerGroup);
-new GameConnection(ServerConnection);
-// This calls GameConnection::onConnect.
-ServerConnection.connectLocal();
+// Start playing the game!
+SimpleNetClient.connectTo(local);
 
-// Start game-specific scripts.
-onStart();
-
-//-----------------------------------------------------------------------------
 // Called when the engine is shutting down.
 function onExit() {
-   // Clean up ghosts.
-   ServerConnection.delete();
-
-   // Clean up game objects and so on.
-   onEnd();
-
-   // Delete server-side objects and datablocks.
-   ServerGroup.delete();
-   deleteDataBlocks();
+   GameGroup.delete();
+   SimpleNetServer.destroy();
+   SimpleNetClient.destroy();
+   deleteDatablocks();
 }
