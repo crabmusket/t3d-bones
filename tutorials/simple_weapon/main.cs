@@ -1,6 +1,17 @@
-exec("tutorials/fps_player/playGui.gui");
+displaySplashWindow("splash.bmp");
 
-datablock CameraData(Observer) {};
+// Needed for client-side stuff like the GUI.
+exec("lib/simpleNet/client.cs");
+SimpleNetClient.init();
+
+// Needed because we'll be acting as a local server, so we need some server
+// functions defined.
+exec("lib/simpleNet/server.cs");
+
+singleton Material(BlankWhite) {
+   mapTo = "BlankWhite";
+   diffuseColor[0] = "White";
+};
 
 singleton Material(PlayerMaterial) {
    diffuseColor[0] = "Red";
@@ -20,6 +31,23 @@ singleton Material(GunMetal) {
 singleton Material(ProjectileMat) {
    mapTo = "ProjectileMat";
    diffuseColor[0] = "Green";
+};
+
+new SimGroup(GameGroup) {
+   new LevelInfo(TheLevelInfo) {
+      canvasClearColor = "0 0 0";
+   };
+   new GroundPlane(TheGround) {
+      position = "0 0 0";
+      material = BlankWhite;
+   };
+   new Sun(TheSun) {
+      azimuth = 230;
+      elevation = 45;
+      color = "1 1 1";
+      ambient = "0.1 0.1 0.1";
+      castShadows = true;
+   };
 };
 
 datablock PlayerData(BoxPlayer) {
@@ -44,6 +72,9 @@ datablock ShapeBaseImageData(Gun) {
 
 datablock ProjectileData(GunProjectile) {
    projectileShapeName = "./projectile.dae";
+   armingDelay = 5000;
+   isBallistic = true;
+   gravityMod = 0.1;
 };
 
 function Gun::onFire(%this, %obj) {
@@ -60,43 +91,35 @@ function GunProjectile::onCollision(%this, %obj, %col) {
    error(%col.getClassName());
 }
 
-//-----------------------------------------------------------------------------
-function GameConnection::onEnterGame(%client) {
-   new Player(ThePlayer) {
+// When a client enters the game, the server assigns them a camera.
+function GameConnection::onEnterGame(%this) {
+   %player = new Player() {
       datablock = BoxPlayer;
       position = "0 0 1";
    };
-   %client.setControlObject(ThePlayer);
-   GameGroup.add(ThePlayer);
+   %this.setControlObject(%player);
+   GameGroup.add(%player);
 
    // Give the player a weapon. Attach an image of Gun to slot 0.
-   ThePlayer.mountImage(Gun, 0);
-
-   Canvas.setContent(PlayGui);
-   activateDirectInput();
+   %player.mountImage(Gun, 0);
 }
 
-//-----------------------------------------------------------------------------
-function onStart() {
-   new SimGroup(GameGroup) {
-      new LevelInfo(TheLevelInfo) {
-         canvasClearColor = "Black";
-      };
-      new GroundPlane(TheGround) {
-         position = "0 0 0";
-         material = Tee;
-      };
-      new Sun(TheSun) {
-         azimuth = 230;
-         elevation = 45;
-         color = "White";
-         ambient = "0.1 0.1 0.1";
-         castShadows = true;
-      };
-   };
+// Load console.
+exec("lib/console/main.cs");
 
-   // Allow us to exit the game...
-   GlobalActionMap.bind("keyboard", "escape", "quit");
+// Load HUD.
+exec("tutorials/fps_player/playGui.gui");
+
+// Called on the client-side when we are first assigned a control object on the
+// server (i.e. our camera).
+function GameConnection::initialControlSet(%this) {
+   // Activate HUD which allows us to see the game.
+   Canvas.setContent(PlayGui);
+   activateDirectInput();
+
+   // Replace the splash screen with the main game window.
+   closeSplashWindow();
+   Canvas.showWindow();
 
    new ActionMap(MoveMap);
 
@@ -124,8 +147,15 @@ function pitch(%amount) {
    $mvPitch += %amount * 0.01;
 }
 
-//-----------------------------------------------------------------------------
-function onEnd() {
+// Start playing the game!
+SimpleNetClient.connectTo(self);
+
+// Allow us to exit the game...
+GlobalActionMap.bind("keyboard", "escape", "quit");
+
+// Called when the engine is shutting down.
+function onExit() {
    GameGroup.delete();
-   MoveMap.delete();
+   SimpleNetClient.destroy();
+   SimpleNetServer.destroy();
 }
