@@ -15,7 +15,10 @@ function SimpleNetServer::initDedicated(%this) {
    return %this;
 }
 
-function SimpleNetServer::host(%this) {
+function SimpleNetServer::host(%this, %port) {
+   if (%port !$= "") {
+      %this.port = %port;
+   }
    setNetPort(%this.port);
    allowConnections(true);
    return %this;

@@ -22,6 +22,7 @@ function SimpleNetClient::init(%this) {
 }
 
 function SimpleNetClient::connectTo(%this, %host, %port) {
+   %this.disconnect();
    %this.connection = new GameConnection();
 
    if (%host $= self) {
@@ -34,9 +35,13 @@ function SimpleNetClient::connectTo(%this, %host, %port) {
    return %this;
 }
 
-function SimpleNetClient::destroy(%this) {
-   if (%this.connection) {
+function SimpleNetClient::disconnect(%this) {
+   if(isObject(%this.connection)) {
       %this.connection.delete();
    }
+}
+
+function SimpleNetClient::destroy(%this) {
+   %this.disconnect();
    %this.delete();
 }
