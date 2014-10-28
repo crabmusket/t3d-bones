@@ -5,8 +5,9 @@
 *.exp
 *.ilk
 
-# Compiled scripts
+# Compiled scripts and art
 *.dso
+*.cached.dts
 
 # The console
 console.log
