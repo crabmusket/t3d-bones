@@ -19,4 +19,11 @@ new GameTSCtrl(PlayGui) {
    enabled = "1";
    helpTag = "0";
    noCursor = "0";
+
+   new GuiButtonCtrl() {
+      profile = GuiDefaultProfile;
+      buttonType = PushButton;
+      command = "endGame();";
+      text = "Leave!";
+   };
 };
