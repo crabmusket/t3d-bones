@@ -20,21 +20,23 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-function createCanvas(%windowTitle)
+function Canvas::create(%windowTitle)
 {
    // Create the Canvas
-   new GuiCanvas(Canvas) {
+   %canvas = new GuiCanvas(Canvas) {
       showWindow = false;
    };
 
    // Set the window title
    if (isObject(Canvas)) {
       Canvas.setWindowTitle(%windowTitle);
-      configureCanvas();
+      Canvas.configure();
    } else {
       error("Canvas creation failed. Shutting down.");
       quit();
    }
+
+   return %canvas;
 }
 
 // Constants for referencing video resolution preferences
@@ -45,7 +47,7 @@ $WORD::BITDEPTH = 3;
 $WORD::REFRESH = 4;
 $WORD::AA = 5;
 
-function configureCanvas()
+function Canvas::configure(%this)
 {
    // Setup a good default if we don't have one already.
    if ($pref::Video::mode $= "")
@@ -81,10 +83,10 @@ function configureCanvas()
       {
          warn("Warning: The requested windowed resolution is equal to or larger than the current desktop resolution. Attempting to find a better resolution");
       
-         %resCount = Canvas.getModeCount();
+         %resCount = %this.getModeCount();
          for (%i = (%resCount - 1); %i >= 0; %i--)
          {
-            %testRes = Canvas.getMode(%i);
+            %testRes = %this.getMode(%i);
             %testResX = getWord(%testRes, $WORD::RES_X);
             %testResY = getWord(%testRes, $WORD::RES_Y);
             %testBPP  = getWord(%testRes, $WORD::BITDEPTH);
@@ -122,7 +124,7 @@ function configureCanvas()
       "--------------");
 
    // Actually set the new video mode
-   Canvas.setVideoMode(%resX, %resY, %fs, %bpp, %rate, %fsaa);
+   %this.setVideoMode(%resX, %resY, %fs, %bpp, %rate, %fsaa);
    
    // FXAA piggybacks on the FSAA setting in $pref::Video::mode.
    if ( isObject( FXAA_PostEffect ) )

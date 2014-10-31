@@ -1,13 +1,13 @@
 displaySplashWindow("splash.bmp");
 
-// Needed for client-side stuff like the GUI.
-exec("lib/simpleNet/client.cs");
-SimpleNetClient.init();
+// Initialise audio, GFX, etc.
+exec("lib/sys/main.cs");
+Sys.init();
 
-// Needed because we'll be acting as a local server, so we need some server
-// functions defined.
+// Needed because we'll be acting as a local server, so we need both server
+// and client functions defined.
+exec("lib/simpleNet/client.cs");
 exec("lib/simpleNet/server.cs");
-SimpleNetServer.init();
 
 singleton Material(BlankWhite) {
    diffuseColor[0] = "White";
@@ -83,25 +83,6 @@ function GameConnection::initialControlSet(%this) {
    Canvas.showWindow();
 }
 
-// Start playing the game!
-SimpleNetClient.connectTo(self);
-
-// Allow us to exit the game...
-GlobalActionMap.bind("keyboard", "escape", "quit");
-
-// Called when the engine is shutting down.
-function onExit() {
-   GameGroup.delete();
-   SimpleNetClient.destroy();
-   SimpleNetServer.destroy();
-}
-
-//-----------------------------------------------------------------------------
-singleton Material(BlankWhite) {
-   diffuseColor[0] = "White";
-};
-
-//-----------------------------------------------------------------------------
 // Called when you click anywhere in the play area.
 function PlayGui::onMouseDown(%this, %screenPos, %worldPos, %vector) {
    // Construct the endpoint of our raycast by adding the camera's vector.
@@ -137,30 +118,14 @@ function PlayGui::onRightMouseDown(%this, %screenPos, %worldPos, %vector) {
    }
 }
 
-//-----------------------------------------------------------------------------
-function onStart() {
-   new SimGroup(GameGroup) {
-      new LevelInfo(TheLevelInfo) {
-         canvasClearColor = "0 0 0";
-      };
-      new GroundPlane(TheGround) {
-         position = "0 0 0";
-         material = BlankWhite;
-      };
-      new Sun(TheSun) {
-         azimuth = 230;
-         elevation = 45;
-         color = "1 1 1";
-         ambient = "0.1 0.1 0.1";
-         castShadows = true;
-      };
-   };
+// Start playing the game!
+SimpleNetClient.connectTo(self);
 
-   // Allow us to exit the game...
-   GlobalActionMap.bind("keyboard", "escape", "quit");
-}
+// Allow us to exit the game...
+GlobalActionMap.bind("keyboard", "escape", "quit");
 
-//-----------------------------------------------------------------------------
-function onEnd() {
+// Called when the engine is shutting down.
+function onExit() {
+   SimpleNetClient.disconnect();
    GameGroup.delete();
 }

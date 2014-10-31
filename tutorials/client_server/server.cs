@@ -1,8 +1,6 @@
 exec("lib/simpleNet/server.cs");
 if ($Game::argv[1] $= server) {
    SimpleNetServer.initDedicated().host(28001);
-} else {
-   SimpleNetServer.init();
 }
 
 function createLevel() {

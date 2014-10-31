@@ -1,11 +1,12 @@
 displaySplashWindow("splash.bmp");
 
-// Needed for client-side stuff like the GUI.
-exec("lib/simpleNet/client.cs");
-SimpleNetClient.init();
+// Initialise audio, GFX, etc.
+exec("lib/sys/main.cs");
+Sys.init();
 
-// Needed because we'll be acting as a local server, so we need some server
-// functions defined.
+// Needed because we'll be acting as a local server, so we need both server
+// and client functions defined.
+exec("lib/simpleNet/client.cs");
 exec("lib/simpleNet/server.cs");
 
 singleton Material(BlankWhite) {
@@ -51,13 +52,13 @@ new SimGroup(GameGroup) {
 };
 
 datablock PlayerData(BoxPlayer) {
-   shapeFile = "tutorials/fps_player/player.dts";
+   //shapeFile = "tutorials/fps_player/player.dts";
    cameraMaxDist = 5;
    jumpDelay = 0;
 };
 
 datablock ShapeBaseImageData(Gun) {
-   shapeFile = "./gun.dae";
+   shapeFile = "tutorials/simple_weapon/gun.dae";
    eyeOffset = "0.5 0.5 -0.5";
 
    stateName[0] = "ready";

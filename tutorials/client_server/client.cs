@@ -1,8 +1,11 @@
 displaySplashWindow("splash.bmp");
 
-// Needed for client-side stuff like the GUI.
+// Initialise audio, GFX, etc.
+exec("lib/sys/main.cs");
+Sys.init();
+
+// Needed for client-side stuff.
 exec("lib/simpleNet/client.cs");
-SimpleNetClient.init();
 
 singleton Material(BlankWhite) {
    diffuseColor[0] = "White";

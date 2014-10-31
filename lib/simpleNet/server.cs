@@ -2,10 +2,6 @@ new ScriptObject(SimpleNetServer) {
    port = 28001;
 };
 
-function SimpleNetServer::init(%this) {
-   return %this;
-}
-
 function SimpleNetServer::initDedicated(%this) {
    // Open a console window and create a null GFX device since we won't be
    // rendering a usual game canvas.
@@ -27,11 +23,6 @@ function SimpleNetServer::host(%this, %port) {
 function SimpleNetServer::stop(%this) {
    allowConnections(false);
    return %this;
-}
-
-function SimpleNetServer::destroy(%this) {
-   deleteDatablocks();
-   %this.delete();
 }
 
 // This function is called on the server when a client on another machine
@@ -59,4 +50,7 @@ function GameConnection::onDrop(%this, %reason) {
    %this.onLeaveGame();
 }
 
-//function updateTSShapeLoadProgress() {}
+function SimpleNetServer::destroy(%this) {
+   deleteDatablocks();
+   %this.delete();
+}

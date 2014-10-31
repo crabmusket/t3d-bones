@@ -1,49 +1,65 @@
-exec("./playGui.gui");
+displaySplashWindow("splash.bmp");
 
-datablock CameraData(Observer) {};
+// Initialise audio, GFX, etc.
+exec("lib/sys/main.cs");
+Sys.init();
+
+// Needed because we'll be acting as a local server, so we need both server
+// and client functions defined.
+exec("lib/simpleNet/client.cs");
+exec("lib/simpleNet/server.cs");
 
 singleton Material(BlankWhite) {
-   detailMap[0] = "./white";
+   detailMap[0] = "tutorials/fly_camera/white";
    detailScale[0] = "20 20";
 };
 
-//-----------------------------------------------------------------------------
-function GameConnection::onEnterGame(%client) {
-   new Camera(TheCamera) {
+new SimGroup(GameGroup) {
+   new LevelInfo(TheLevelInfo) {
+      canvasClearColor = "0 0 0";
+   };
+   new GroundPlane(TheGround) {
+      position = "0 0 0";
+      material = BlankWhite;
+   };
+   new Sun(TheSun) {
+      azimuth = 230;
+      elevation = 45;
+      color = "1 1 1";
+      ambient = "0.1 0.1 0.1";
+      castShadows = true;
+   };
+};
+
+datablock CameraData(Observer) {};
+
+function GameConnection::onEnterGame(%this) {
+   %camera = new Camera() {
       datablock = Observer;
    };
    TheCamera.setTransform("0 0 2 1 0 0 0");
+   %camera.scopeToClient(%this);
+   %this.setControlObject(%camera);
+   %this.add(%camera);
+}
 
-   TheCamera.scopeToClient(%client);
-   %client.setControlObject(TheCamera);
-   GameGroup.add(TheCamera);
+// Load console.
+exec("lib/console/main.cs");
 
+// Load HUD.
+exec("tutorials/fly_camera/playGui.gui");
+
+// Called on the client-side when we are first assigned a control object on the
+// server (i.e. our camera).
+function GameConnection::initialControlSet(%this) {
+   // Activate HUD which allows us to see the game.
    PlayGui.noCursor = true;
    Canvas.setContent(PlayGui);
    activateDirectInput();
-}
 
-//-----------------------------------------------------------------------------
-function onStart() {
-   new SimGroup(GameGroup) {
-      new LevelInfo(TheLevelInfo) {
-         canvasClearColor = "0 0 0";
-      };
-      new GroundPlane(TheGround) {
-         position = "0 0 0";
-         material = BlankWhite;
-      };
-      new Sun(TheSun) {
-         azimuth = 230;
-         elevation = 45;
-         color = "1 1 1";
-         ambient = "0.1 0.1 0.1";
-         castShadows = true;
-      };
-   };
-
-   // Allow us to exit the game...
-   GlobalActionMap.bind("keyboard", "escape", "quit");
+   // Replace the splash screen with the main game window.
+   closeSplashWindow();
+   Canvas.showWindow();
 
    new ActionMap(MoveMap);
    MoveMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
@@ -55,6 +71,12 @@ function onStart() {
    MoveMap.push();
 }
 
+// Start playing the game!
+SimpleNetClient.connectTo(self);
+
+// Allow us to exit the game...
+GlobalActionMap.bind("keyboard", "escape", "quit");
+
 function yaw(%amount) {
    $mvYaw += %amount * 0.01;
 }
@@ -63,7 +85,8 @@ function pitch(%amount) {
    $mvPitch += %amount * 0.01;
 }
 
-//-----------------------------------------------------------------------------
-function onEnd() {
+// Called when the engine is shutting down.
+function onExit() {
+   SimpleNetClient.disconnect();
    GameGroup.delete();
 }

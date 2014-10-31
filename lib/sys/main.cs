@@ -35,6 +35,29 @@
 // to find exactly which subsystems should be readied before kicking things off. 
 // ----------------------------------------------------------------------------
 
+new ScriptObject(Sys) {
+   lightingMode = "Advanced Lighting";
+   windowTitle = "Torque 3D";
+   canvas = 0;
+};
+
+function Sys::init(%this) {
+   // The canvas needs to be initialized before any gui scripts are run since
+   // some of the controls assume that the canvas exists at load time.
+   %this.canvas = Canvas::create(%this.windowTitle);
+
+   // Start rendering and stuff. Must be done after creating the canvas.
+   initRenderManager();
+   initLightingSystems(%this.lightingMode);
+   sfxStartup();
+
+   return %this;
+}
+
+function Sys::destroy(%this) {
+   %this.delete();
+}
+
 // We need some of the default GUI profiles in order to get the canvas and
 // other aspects of the GUI system ready.
 exec("./profiles.cs");

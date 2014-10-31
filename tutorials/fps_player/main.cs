@@ -1,4 +1,13 @@
-exec("./playGui.gui");
+displaySplashWindow("splash.bmp");
+
+// Initialise audio, GFX, etc.
+exec("lib/sys/main.cs");
+Sys.init();
+
+// Needed because we'll be acting as a local server, so we need both server
+// and client functions defined.
+exec("lib/simpleNet/client.cs");
+exec("lib/simpleNet/server.cs");
 
 datablock CameraData(Observer) {};
 
@@ -8,14 +17,31 @@ singleton Material(PlayerMaterial) {
 };
 
 singleton Material(Tee) {
-   detailMap[0] = "./tee";
+   detailMap[0] = "tutorials/fps_player/tee";
    detailScale[0] = "20 20";
 };
 
 datablock PlayerData(BoxPlayer) {
-   shapeFile = "./candide.dae";
+   shapeFile = "tutorials/fps_player/player.dts";
    cameraMaxDist = 5;
    jumpDelay = 0;
+};
+
+new SimGroup(GameGroup) {
+   new LevelInfo(TheLevelInfo) {
+      canvasClearColor = "0 0 0";
+   };
+   new GroundPlane(TheGround) {
+      position = "0 0 0";
+      material = Tee;
+   };
+   new Sun(TheSun) {
+      azimuth = 230;
+      elevation = 45;
+      color = "1 1 1";
+      ambient = "0.1 0.1 0.1";
+      castShadows = true;
+   };
 };
 
 //-----------------------------------------------------------------------------
@@ -26,32 +52,21 @@ function GameConnection::onEnterGame(%client) {
    };
    %client.setControlObject(ThePlayer);
    GameGroup.add(ThePlayer);
-
-   Canvas.setContent(PlayGui);
-   activateDirectInput();
 }
 
-//-----------------------------------------------------------------------------
-function onStart() {
-   new SimGroup(GameGroup) {
-      new LevelInfo(TheLevelInfo) {
-         canvasClearColor = "0 0 0";
-      };
-      new GroundPlane(TheGround) {
-         position = "Black";
-         material = Tee;
-      };
-      new Sun(TheSun) {
-         azimuth = 230;
-         elevation = 45;
-         color = "White";
-         ambient = "0.1 0.1 0.1";
-         castShadows = true;
-      };
-   };
+exec("lib/console/main.cs");
 
-   // Allow us to exit the game...
-   GlobalActionMap.bind("keyboard", "escape", "quit");
+exec("tutorials/fps_player/playGui.gui");
+
+function GameConnection::initialControlSet(%this) {
+   // Activate HUD which allows us to see the game.
+   PlayGui.noCursor = true;
+   Canvas.setContent(PlayGui);
+   activateDirectInput();
+
+   // Replace the splash screen with the main game window.
+   closeSplashWindow();
+   Canvas.showWindow();
 
    new ActionMap(MoveMap);
    MoveMap.bindCmd("keyboard", "w", "$mvForwardAction = 1;",  "$mvForwardAction = 0;");
@@ -73,8 +88,13 @@ function pitch(%amount) {
    $mvPitch += %amount * 0.01;
 }
 
-//-----------------------------------------------------------------------------
-function onEnd() {
+// Start playing the game!
+SimpleNetClient.connectTo(self);
+
+// Allow us to exit the game...
+GlobalActionMap.bind("keyboard", "escape", "quit");
+
+function onExit() {
+   SimpleNetClient.disconnect();
    GameGroup.delete();
-   MoveMap.delete();
 }
