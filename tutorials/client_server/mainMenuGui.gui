@@ -1,0 +1,38 @@
+new GuiControlProfile(MyProfile : GuiDefaultProfile) {
+   fontType = "Lane - Narrow";
+   fontSize = 16;
+   fontColor = "Black";
+};
+
+new GuiControlProfile(InputProfile : MyProfile) {
+   canKeyFocus = true;
+   fillColor = "242 241 240 0";
+   fillColorHL = "255 255 255";
+};
+
+new GuiBitmapCtrl(MainMenuGui) {
+   bitmap = "tutorials/client_server/hudfill";
+   profile = MyProfile;
+   horizSizing = width;
+   vertSizing = height;
+   position = "0 0";
+   extent = "800 600";
+   minExtent = "8 8";
+   wrap = false;
+
+   new GuiButtonCtrl() {
+      profile = MyProfile;
+      buttonType = PushButton;
+      command = "play();";
+      text = "PLAY";
+      visible = $Game::argv[1] !$= client;
+   };
+
+   new GuiButtonCtrl() {
+      profile = MyProfile;
+      position = "0 60";
+      buttonType = PushButton;
+      command = "connect();";
+      text = "JOIN";
+   };
+};
