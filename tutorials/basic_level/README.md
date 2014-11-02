@@ -4,7 +4,7 @@ This tutorial covers the very basics of creating objects in a level once the eng
 This includes datablocks, materials, and as a bonus, key binds.
 The contents of this tutorial are all in [main.cs][], and I advise following along.
 
- [game.cs]: ./main.cs
+ [main.cs]: ./main.cs
 
 ## The game script
 
