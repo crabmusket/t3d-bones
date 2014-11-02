@@ -1,3 +1,7 @@
+// Enable console logging, which creates the file console.log each time you run
+// the engine.
+setLogMode(2);
+
 // Display a splash window immediately to improve app responsiveness before
 // engine is initialized and main window created
 displaySplashWindow("splash.bmp");
