@@ -1,14 +1,20 @@
-exec("game/playGui.gui");
+displaySplashWindow("splash.bmp");
+
+// Initialise audio, GFX, etc.
+exec("lib/sys/main.cs");
+Sys.init();
+
+// Needed because we'll be acting as a local server, so we need both server
+// and client functions defined.
+exec("lib/net/client.cs");
+exec("lib/net/server.cs");
 
 physicsInit();
 
-//-----------------------------------------------------------------------------
 datablock CameraData(Observer) {};
 
-//-----------------------------------------------------------------------------
 singleton Material(BlankWhite) {
    diffuseColor[0] = "White";
-   mapTo = "BlankWhite";
 };
 
 singleton Material(CubeMat) {
